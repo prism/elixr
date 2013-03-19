@@ -27,7 +27,7 @@ public class MaterialAliases {
 		FileConfiguration items = null;
 		InputStream defConfigStream = MaterialAliases.class.getResourceAsStream("items.yml");
 	    if (defConfigStream != null){
-	    	System.out.println("Loaded items!");
+	    	System.out.println("Elixr: Loaded items directory");
 	    	items = YamlConfiguration.loadConfiguration(defConfigStream);
 	    }
 	    
@@ -39,7 +39,6 @@ public class MaterialAliases {
 			// Cache the values for easier lookup
 			if(itemaliases != null){
 				for (String key : itemaliases.keySet()){
-					System.out.println("Loaded item: " + key);
 					@SuppressWarnings("unchecked")
 					ArrayList<String> aliases = (ArrayList<String>)itemaliases.get(key);
 					if(aliases.size() > 0){
@@ -49,6 +48,8 @@ public class MaterialAliases {
 					}
 				}
 			}
+	    } else {
+	    	System.out.println("ERROR: The Elixr library was unable to load an internal item alias list.");
 	    }
 	}
 	
