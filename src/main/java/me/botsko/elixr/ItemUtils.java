@@ -15,6 +15,46 @@ public class ItemUtils {
 	
 	
 	/**
+	 * @todo this is buggy, wth?
+	 * @return
+	 */
+	public String getUsedDurabilityPercentage( ItemStack item ){
+
+		short dura = item.getDurability();
+		short max_dura = item.getType().getMaxDurability();
+		if(dura > 0 && max_dura > 0 && dura != max_dura){
+			double diff = ((dura / max_dura)*100);
+			if(diff > 0){
+				return Math.floor(diff) + "%";
+			}
+		}
+
+		return "";
+	}
+	
+	
+	/**
+	 * Returns the durability remaining
+	 * @return
+	 */
+	public static String getDurabilityPercentage( ItemStack item ){
+
+		short dura = item.getDurability();
+		short max_dura = item.getType().getMaxDurability();
+		if(dura > 0 && max_dura > 0 && dura != max_dura){
+			double diff = max_dura - dura;
+			diff = ((diff / max_dura)*100);
+			if(diff > 0){
+				return Math.floor(diff) + "%";
+			}
+			return "0%";
+		}
+		
+		return "";
+	}
+	
+	
+	/**
 	 * Returns a proper full name for an item, which includes meta content as well.
 	 * @return string
 	 */
@@ -97,4 +137,47 @@ public class ItemUtils {
 		return item_name;
 		
 	}
+	
+	
+	/**
+     * Returns true if an item uses its damage value for something
+     * other than durability.
+     *
+     * @param id
+     * @return
+     */
+    public static boolean usesDamageValue( int id ){
+    	return id == 17 		// logs
+        		|| id == 18 	// leaves
+        		|| id == 24     // sandstone
+        		|| id == 31 	// tallgrass
+                || id == 35 	// wool
+                || id == 43 	// double slab
+                || id == 44 	// slab
+                || id == 98 	// stonebrick
+                || id == 263 	// charcoal
+                || id == 351    // dye
+                || id == 6		// saplings
+                || id == 373    // potions
+        		|| id == 383;   // creature eggs
+    }
+    
+    
+    /**
+     * Determines if an itemstack can be stacked. Maz stack size, meta data,
+     * and more taken into account.
+     * @param item
+     */
+    public static boolean canSafelyStack( ItemStack item ){
+    	// Can't stack
+    	if( item.getMaxStackSize() == 1 ){
+    		return false;
+    	}
+    	// Has meta
+    	ItemMeta im = item.getItemMeta();
+    	if(im != null){
+    		return false;
+    	}
+    	return true;
+    }
 }

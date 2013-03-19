@@ -27,6 +27,7 @@ public class MaterialAliases {
 		FileConfiguration items = null;
 		InputStream defConfigStream = MaterialAliases.class.getResourceAsStream("items.yml");
 	    if (defConfigStream != null){
+	    	System.out.println("Loaded items!");
 	    	items = YamlConfiguration.loadConfiguration(defConfigStream);
 	    }
 	    
@@ -37,7 +38,8 @@ public class MaterialAliases {
 			
 			// Cache the values for easier lookup
 			if(itemaliases != null){
-				for (String key : itemaliases.keySet()) {
+				for (String key : itemaliases.keySet()){
+					System.out.println("Loaded item: " + key);
 					@SuppressWarnings("unchecked")
 					ArrayList<String> aliases = (ArrayList<String>)itemaliases.get(key);
 					if(aliases.size() > 0){

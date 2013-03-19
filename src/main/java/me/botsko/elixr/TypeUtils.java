@@ -1,5 +1,6 @@
 package me.botsko.elixr;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -22,6 +23,16 @@ public class TypeUtils {
 		}
 		return true;
 	}
+	
+	
+	/**
+     * 
+     * @param val
+     * @return
+     */
+	public static float formatDouble( double val ){
+    	return Float.parseFloat(new DecimalFormat("#.##").format(val));
+    }
 	
 	
 	/**
