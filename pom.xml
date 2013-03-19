@@ -1,9 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>me.botsko</groupId>
-  <artifactId>elixr</artifactId>
-  <version>nightly</version>
-  <name>Elixr</name>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>me.botsko</groupId>
+	<artifactId>elixr</artifactId>
+	<version>${describe}</version>
+	<name>Elixr</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	</properties>
     <dependencies>
 		<dependency>
 			<groupId>org.bukkit</groupId>
@@ -29,4 +32,27 @@
 	     <url>http://dhmc.us8081/nexus/content/repositories/snapshots/</url>
 	  </snapshotRepository>
 	</distributionManagement>
+	<pluginRepositories>
+	    <pluginRepository>
+	    	<id>bukkit-plugins</id>
+	    	<url>http://artifacts.lukegb.com/artifactory/plugins-release</url>
+	    </pluginRepository>
+	</pluginRepositories>
+	<build>
+	    <plugins>
+			<plugin>
+				<groupId>com.lukegb.mojo</groupId>
+				<artifactId>gitdescribe-maven-plugin</artifactId>
+				<version>1.3</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>gitdescribe</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
