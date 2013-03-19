@@ -11,7 +11,8 @@ public class DateUtils {
 	
 	
 	/**
-	 * 
+	 * Returns a future timestamp based on the time format provided
+	 * @param arg_value
 	 * @return
 	 */
 	public static String translateTimeStringToFutureDate( String arg_value ){
@@ -59,7 +60,7 @@ public class DateUtils {
 	
 	
 	/**
-	 * 
+	 * Returns a past timestamp based on the time format provided
 	 * @return
 	 */
 	public static String getTimeSince( String date ){
@@ -107,7 +108,7 @@ public class DateUtils {
 	
 	
 	/**
-	 * 
+	 * Returns a timestring format until a date
 	 * @return
 	 */
 	public static String getTimeUntil( String date ){

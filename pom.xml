@@ -4,7 +4,7 @@
   <artifactId>elixr</artifactId>
   <version>nightly</version>
   <name>Elixr</name>
-    	<dependencies>
+    <dependencies>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
@@ -17,4 +17,16 @@
 			<url>http://repo.bukkit.org/content/groups/public</url>
 		</repository>
 	</repositories>
+	<distributionManagement>
+	  <repository>
+	     <id>deployment</id>
+	     <name>Internal Releases</name>
+	     <url>http://dhmc.us:8081/nexus/content/repositories/releases/</url>
+	  </repository>
+	  <snapshotRepository>
+	     <id>deployment</id>
+	     <name>Internal Releases</name>
+	     <url>http://dhmc.us8081/nexus/content/repositories/snapshots/</url>
+	  </snapshotRepository>
+	</distributionManagement>
 </project>
