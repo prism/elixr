@@ -13,13 +13,13 @@ import org.bukkit.inventory.ItemStack;
 public class MaterialAliases {
 	
 	/**
-	 * 
+	 * Contains loaded item ids => aliases
 	 */
 	protected HashMap<String,String> itemAliases = new HashMap<String,String>();
 	
 	
 	/**
-	 * 
+	 * Load the yml file and save config to hashmap
 	 * @param plugin
 	 */
 	public MaterialAliases(){
@@ -55,12 +55,21 @@ public class MaterialAliases {
 	
 	
 	/**
-	 * 
+	 * Returns the loaded list of item aliases/ids;
+	 * @return
+	 */
+	public HashMap<String,String> getItemAliases(){
+		return itemAliases;
+	}
+	
+	
+	/**
+	 * Returns the proper name given an item type id, data/durability
 	 * @param typeid
 	 * @param subid
 	 * @return
 	 */
-	public String getItemStackAliasById( int typeid, int subid ){
+	public String getAlias( int typeid, int subid ){
 		String item_name = null;
 		if(!itemAliases.isEmpty()){
 			String key = typeid+":"+subid;
@@ -75,12 +84,12 @@ public class MaterialAliases {
 	
 	
 	/**
-	 * 
+	 * Returns the proper name given an item stack
 	 * @param i
 	 * @return
 	 */
-	public String getItemStackAliasByItemStack( ItemStack i ){
-		return getItemStackAliasById( i.getTypeId(), (byte) i.getDurability() );
+	public String getAlias( ItemStack i ){
+		return getAlias( i.getTypeId(), (byte) i.getDurability() );
 	}
 	
 	
@@ -89,7 +98,7 @@ public class MaterialAliases {
 	 * @param alias
 	 * @return
 	 */
-	public ArrayList<int[]> getItemIdsByAlias( String alias ){
+	public ArrayList<int[]> getIdsByAlias( String alias ){
 		ArrayList<int[]> itemIds = new ArrayList<int[]>();
 		if(!itemAliases.isEmpty()){
 			for (Entry<String, String> entry : itemAliases.entrySet()){

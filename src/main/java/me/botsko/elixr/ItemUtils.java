@@ -79,10 +79,10 @@ public class ItemUtils {
 		}
 		
 		// Set the base item name
-		if(BlockUtils.hasSubitems(item.getTypeId())){
-			item_name += aliases.getItemStackAliasById(item.getTypeId(), (byte)item.getDurability());
+		if(dataValueUsedForSubitems(item.getTypeId())){
+			item_name += aliases.getAlias(item.getTypeId(), (byte)item.getDurability());
 		} else {
-			item_name += aliases.getItemStackAliasById(item.getTypeId(), (byte)0);
+			item_name += aliases.getAlias(item.getTypeId(), (byte)0);
 		}
 		if(item_name.isEmpty()){
 			item_name += item.getType().toString().toLowerCase().replace("_", " ");
@@ -146,7 +146,7 @@ public class ItemUtils {
      * @param id
      * @return
      */
-    public static boolean usesDamageValue( int id ){
+    public static boolean dataValueUsedForSubitems( int id ){
     	return id == 17 		// logs
         		|| id == 18 	// leaves
         		|| id == 24     // sandstone

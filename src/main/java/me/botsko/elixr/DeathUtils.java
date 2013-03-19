@@ -185,7 +185,6 @@ public class DeathUtils {
 	
 	/**
 	 * Determines the owner of a tamed wolf.
-	 * 
 	 * @param event
 	 * @return
 	 */
@@ -208,8 +207,7 @@ public class DeathUtils {
 	
 	
 	/**
-	 * Determines the weapon used.
-	 * 
+	 * Determines the weapon used to kill an entity.
 	 * @param p
 	 * @return
 	 */
