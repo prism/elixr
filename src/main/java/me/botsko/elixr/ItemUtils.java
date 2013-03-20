@@ -18,7 +18,7 @@ public class ItemUtils {
 	 * @todo this is buggy, wth?
 	 * @return
 	 */
-	public String getUsedDurabilityPercentage( ItemStack item ){
+	public static String getUsedDurabilityPercentage( ItemStack item ){
 
 		short dura = item.getDurability();
 		short max_dura = item.getType().getMaxDurability();
@@ -80,9 +80,9 @@ public class ItemUtils {
 		
 		// Set the base item name
 		if(dataValueUsedForSubitems(item.getTypeId())){
-			item_name += aliases.getAlias(item.getTypeId(), (byte)item.getDurability());
+			item_name += aliases.getAlias(item.getTypeId(), item.getDurability());
 		} else {
-			item_name += aliases.getAlias(item.getTypeId(), (byte)0);
+			item_name += aliases.getAlias(item.getTypeId(), 0);
 		}
 		if(item_name.isEmpty()){
 			item_name += item.getType().toString().toLowerCase().replace("_", " ");
