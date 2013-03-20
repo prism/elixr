@@ -155,6 +155,7 @@ public class ItemUtils {
                 || id == 43 	// double slab
                 || id == 44 	// slab
                 || id == 98 	// stonebrick
+                || id == 139    // mossycobblewall
                 || id == 263 	// charcoal
                 || id == 351    // dye
                 || id == 6		// saplings
