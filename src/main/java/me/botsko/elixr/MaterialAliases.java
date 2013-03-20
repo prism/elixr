@@ -25,7 +25,7 @@ public class MaterialAliases {
 	public MaterialAliases(){
 		
 		FileConfiguration items = null;
-		InputStream defConfigStream = MaterialAliases.class.getResourceAsStream("items.yml");
+		InputStream defConfigStream = this.getClass().getResourceAsStream("/items.yml");
 	    if (defConfigStream != null){
 	    	System.out.println("Elixr: Loaded items directory");
 	    	items = YamlConfiguration.loadConfiguration(defConfigStream);
