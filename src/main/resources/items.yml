@@ -400,6 +400,7 @@ items:
     '155:0': [quartzblock]
     '156:0': [quartzstairs]
     '44:7': [quartzslab]
+    '44:6': [netherbrickslab]
     '405:0': [netherbrick]
     '151:0': [daylightsensor]
     '404:0': [comparator]
