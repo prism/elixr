@@ -172,7 +172,8 @@ public class ItemUtils {
                 || id == 351    // dye
                 || id == 6		// saplings
                 || id == 373    // potions
-        		|| id == 383;   // creature eggs
+        		|| id == 383    // creature eggs
+    			|| id == 397;   // skulls
     }
     
     
