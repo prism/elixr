@@ -91,7 +91,6 @@ public class TypeUtils {
 	}
 	
 	
-	
 	/**
 	 * Java implementation of preg_match_all by https://github.com/raimonbosch
 	 * @param p
