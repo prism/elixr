@@ -2,23 +2,10 @@ package me.botsko.elixr;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Blaze;
-import org.bukkit.entity.CaveSpider;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EnderDragon;
-import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.MagmaCube;
-import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Silverfish;
 import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Slime;
-import org.bukkit.entity.Spider;
-import org.bukkit.entity.Wither;
 import org.bukkit.entity.Wolf;
-import org.bukkit.entity.Zombie;
 import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -31,13 +18,13 @@ public class DeathUtils {
 	
 	/**
 	 * Returns the name of what caused an entity to die.
-	 * @param event
+	 * @param damageCause
 	 * @param p
-	 * @return String
+	 * @return
 	 */
-	public static String getCauseOfDeath(EntityDeathEvent event, Player p){
+	public static String getCauseNiceName( Entity entity ){
 		
-		EntityDamageEvent e = event.getEntity().getLastDamageCause();
+		EntityDamageEvent e = entity.getLastDamageCause();
 		
 		if(e == null){
 			return "unknown";
@@ -45,51 +32,61 @@ public class DeathUtils {
 		
 		// Determine the root cause
 		DamageCause damageCause = e.getCause();
-        String cause = e.getCause().toString().toLowerCase();
-        
-        // Detect additional suicide. For example, when you potion
-        // yourself with instant damage it doesn't show as suicide.
-        if(p.getKiller() instanceof Player){
-        	Player killer = p.getKiller();
-        	if(killer.getName() == p.getName()){
-        		cause = "suicide";
-        	}
-        }
-        
-        // translate bukkit events to nicer names
-        if(damageCause.equals(DamageCause.ENTITY_ATTACK) && p.getKiller() instanceof Player){
-        	cause = "pvp";
-        }
-        if(damageCause.equals(DamageCause.ENTITY_ATTACK) && !(p.getKiller() instanceof Player)){
-        	cause = "mob";
-        }
-        if(cause == "ENTITY_ATTACK" && p.getKiller() instanceof Wither){
-        	cause = "mob";
-        }
-        if(damageCause.equals(DamageCause.PROJECTILE) && !(p.getKiller() instanceof Player)){
-        	cause = "skeleton";
-        }
-        if(damageCause.equals(DamageCause.PROJECTILE) && (p.getKiller() instanceof Player)){
-        	cause = "pvp"; // bow and arrow
-        }
-        if(damageCause.equals(DamageCause.ENTITY_EXPLOSION)){
-        	cause = "creeper"; // creeper
-        }
-        if(damageCause.equals(DamageCause.CONTACT)){
-        	cause = "cactus";
-        }
-        if(damageCause.equals(DamageCause.BLOCK_EXPLOSION)){
-        	cause = "tnt";
-        }
-        if(damageCause.equals(DamageCause.FIRE) || damageCause.equals(DamageCause.FIRE_TICK)){
-        	cause = "fire";
-        }
-        if(damageCause.equals(DamageCause.MAGIC)){
-        	cause = "potion";
-        }
+		Entity killer = null;
 
-        return cause;
-		
+		// If was damaged by an entity
+		if(entity.getLastDamageCause() instanceof EntityDamageByEntityEvent){
+			EntityDamageByEntityEvent entityDamageByEntityEvent = (EntityDamageByEntityEvent) entity.getLastDamageCause();
+			// Arrow?
+			if(entityDamageByEntityEvent.getDamager() instanceof Arrow){
+				Arrow arrow = (Arrow) entityDamageByEntityEvent.getDamager();
+				killer = arrow.getShooter();
+			} else {
+				killer = entityDamageByEntityEvent.getDamager();
+			}
+		}
+
+        if( entity instanceof Player ){
+        	
+        	Player player = (Player) entity;
+
+	        // Detect additional suicide. For example, when you potion
+	        // yourself with instant damage it doesn't show as suicide.
+	        if( killer instanceof Player ){
+	        	// Themself
+	        	if(((Player)killer).getName().equals( player.getName() )){
+	        		return "suicide";
+	        	}
+		        // translate bukkit events to nicer names
+		        if( ( damageCause.equals(DamageCause.ENTITY_ATTACK) || damageCause.equals(DamageCause.PROJECTILE))){
+		        	return "pvp";
+		        }
+	        }
+        }
+        
+        // Causes of death for either entities or players
+        if(damageCause.equals(DamageCause.ENTITY_ATTACK)){
+        	return "mob";
+        }
+        else if(damageCause.equals(DamageCause.PROJECTILE)){
+        	return "skeleton";
+        }
+        else if(damageCause.equals(DamageCause.ENTITY_EXPLOSION)){
+        	return "creeper";
+        }
+        else if(damageCause.equals(DamageCause.CONTACT)){
+        	return "cactus";
+        }
+        else if(damageCause.equals(DamageCause.BLOCK_EXPLOSION)){
+        	return "tnt";
+        }
+        else if(damageCause.equals(DamageCause.FIRE) || damageCause.equals(DamageCause.FIRE_TICK)){
+        	return "fire";
+        }
+        else if(damageCause.equals(DamageCause.MAGIC)){
+        	return "potion";
+        }
+        return null;
 	}
 	
 	
@@ -100,86 +97,101 @@ public class DeathUtils {
 	 * @param p
 	 * @return
 	 */
-	public static String getAttacker(EntityDeathEvent event, Player p){
+	public static String getAttackerName( Entity victim ){
 		
-		String attacker = "";
-		String cause = getCauseOfDeath(event, p);
-        if(p.getKiller() instanceof Player){
-        	attacker = p.getKiller().getName();
+		// Determine base cause
+		String cause = getCauseNiceName( victim );
+		
+        if( victim instanceof Player ){
+        	return ((Player)victim).getKiller().getName();
         } else {
+        	
             if(cause == "mob"){
             	
-            	Entity killer = ((EntityDamageByEntityEvent)event.getEntity().getLastDamageCause()).getDamager();
-            	
-            	// @todo clean this up
-            	if (killer instanceof Blaze){
-            		attacker = "blaze";
+            	Entity killer = ((EntityDamageByEntityEvent)victim.getLastDamageCause()).getDamager();
+
+            	// Playa!
+            	if( killer instanceof Player ){
+            		return ((Player)killer).getName(); 
             	}
-            	if (killer instanceof CaveSpider){
-            		attacker = "cave spider";
-            	}
-            	if (killer instanceof Creeper){
-            		attacker = "creeper";
-            	}
-            	if (killer instanceof EnderDragon){
-            		attacker = "ender dragon";
-            	}
-            	if (killer instanceof Enderman){
-            		attacker = "enderman";
-            	}
-            	if (killer instanceof Ghast){
-            		attacker = "ghast";
-            	}
-            	if (killer instanceof MagmaCube){
-            		attacker = "magma cube";
-            	}
-            	if (killer instanceof PigZombie){
-            		attacker = "pig zombie";
-            	}
-            	if (killer instanceof Silverfish){
-            		attacker = "silverfish";
-            	}
-            	if (killer instanceof Skeleton){
+            	// Which skeleton type?
+            	else if (killer instanceof Skeleton){
             		Skeleton skele = (Skeleton) killer;
             		if(skele.getSkeletonType() == SkeletonType.WITHER){
-            			attacker = "witherskeleton";
+            			return "witherskeleton";
             		} else {
-            			attacker = "skeleton";
+            			return "skeleton";
             		}
             	}
-            	if (killer instanceof Arrow){
-            		attacker = "skeleton";
+            	// Shot!
+            	else if (killer instanceof Arrow){
+            		return "skeleton";
             	}
-            	if (killer instanceof Slime){
-            		attacker = "slime";
-            	}
-            	if (killer instanceof Spider){
-            		attacker = "spider";
-            	}
-            	if (killer instanceof Wither){
-            		attacker = "wither";
-            	}
-            	if (killer instanceof Wolf){
+            	// Aggressive wolves
+            	else if (killer instanceof Wolf){
                     Wolf wolf = (Wolf)killer;
                     if(wolf.isTamed()){
                         if(wolf.getOwner() instanceof Player || wolf.getOwner() instanceof OfflinePlayer ){
-                            attacker = "pvpwolf";
+                        	return "pvpwolf";
                         } else {
-                        	attacker = "wolf";
+                        	return "wolf";
                         }
                     } else {
-                    	attacker = "wolf";
+                    	return "wolf";
                     }
-            		
             	}
-            	if (killer instanceof Zombie){
-            		attacker = "zombie";
+            	else {
+            		return killer.getType().getName().toLowerCase();
             	}
             }
         }
-        
-        return attacker;
-        
+        return cause;
+	}
+	
+	
+	/**
+	 * Returns the name of the attacker, whether mob or player.
+	 * 
+	 * @param event
+	 * @param p
+	 * @return
+	 */
+	public static String getVictimName( Entity victim ){
+		
+        if( victim instanceof Player ){
+        	return ((Player)victim).getName();
+        } else {
+
+        	// Which skeleton type?
+        	if (victim instanceof Skeleton){
+        		Skeleton skele = (Skeleton) victim;
+        		if(skele.getSkeletonType() == SkeletonType.WITHER){
+        			return "witherskeleton";
+        		} else {
+        			return "skeleton";
+        		}
+        	}
+        	// Shot!
+        	else if (victim instanceof Arrow){
+        		return "skeleton";
+        	}
+        	// Aggressive wolves
+        	else if (victim instanceof Wolf){
+                Wolf wolf = (Wolf)victim;
+                if(wolf.isTamed()){
+                    if(wolf.getOwner() instanceof Player || wolf.getOwner() instanceof OfflinePlayer ){
+                    	return "pvpwolf";
+                    } else {
+                    	return "wolf";
+                    }
+                } else {
+                	return "wolf";
+                }
+        	}
+        	else {
+        		return victim.getType().getName().toLowerCase();
+        	}
+        }
 	}
 	
 	
@@ -212,7 +224,6 @@ public class DeathUtils {
 	 * @return
 	 */
 	public static String getWeapon(Player p){
-
         String death_weapon = "";
         if(p.getKiller() instanceof Player){
         	ItemStack weapon = p.getKiller().getItemInHand();
@@ -222,8 +233,6 @@ public class DeathUtils {
         		death_weapon = " hands";
         	}
         }
-        
         return death_weapon;
-        
 	}
 }
