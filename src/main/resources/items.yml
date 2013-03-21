@@ -407,3 +407,8 @@ items:
     '157:0': [activatorrail]
     '147:0': [lightpressureplate]
     '148:0': [heavypressureplate]
+    '397:0': [skeletonskull]
+    '397:1': [witherskull]
+    '397:2': [zombieskull]
+    '397:3': [playerskull]
+    '397:4': [creeperskull]
