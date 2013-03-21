@@ -25,7 +25,7 @@ public class InventoryUtils {
 	 * @param sub_id
 	 * @return
 	 */
-	public static int inventoryHasItem( Inventory inv, int item_id, byte sub_id ){
+	public static int inventoryHasItem( Inventory inv, int item_id, int sub_id ){
 		int currentSlot = 0;
 		for(ItemStack item : inv.getContents()){
 			if( item != null && item.getTypeId() == item_id && item.getDurability() == sub_id ){
@@ -235,7 +235,7 @@ public class InventoryUtils {
 	 * @param player
 	 * @return
 	 */
-    public ItemStack[] sortItemStack(ItemStack[] stack, Player player) {
+    public static ItemStack[] sortItemStack(ItemStack[] stack, Player player) {
         return sortItemStack(stack, 0, stack.length, player);
     }
 
@@ -248,7 +248,7 @@ public class InventoryUtils {
      * @param player
      * @return
      */
-    public ItemStack[] sortItemStack(ItemStack[] stack, int start, int end, Player player) {
+    public static ItemStack[] sortItemStack(ItemStack[] stack, int start, int end, Player player) {
         stack = stackItems(stack, start, end);
         recQuickSort(stack, start, end - 1);
         return stack;
@@ -262,7 +262,7 @@ public class InventoryUtils {
      * @param end
      * @return
      */
-    private ItemStack[] stackItems(ItemStack[] items, int start, int end) {
+    private static ItemStack[] stackItems(ItemStack[] items, int start, int end) {
         for (int i = start; i < end; i++) {
             ItemStack item = items[i];
 
@@ -311,7 +311,7 @@ public class InventoryUtils {
      * @param first
      * @param second
      */
-    private void swap(ItemStack[] list, int first, int second) {
+    private static void swap(ItemStack[] list, int first, int second) {
         ItemStack temp;
         temp = list[first];
         list[first] = list[second];
@@ -324,7 +324,7 @@ public class InventoryUtils {
      * @author botskonet
      *
      */
-    private class ComparableIS {
+    private static class ComparableIS {
 
         private ItemStack item;
 
@@ -371,7 +371,7 @@ public class InventoryUtils {
      * @param last
      * @return
      */
-    private int partition(ItemStack[] list, int first, int last) {
+    private static int partition(ItemStack[] list, int first, int last) {
         ItemStack pivot;
 
         int smallIndex;
@@ -403,7 +403,7 @@ public class InventoryUtils {
      * @param first
      * @param last
      */
-    private void recQuickSort(ItemStack[] list, int first, int last) {
+    private static void recQuickSort(ItemStack[] list, int first, int last) {
         if (first < last) {
             int pivotLocation = partition(list, first, last);
             recQuickSort(list, first, pivotLocation - 1);
