@@ -88,6 +88,18 @@ public class ItemUtils {
 			item_name += item.getType().toString().toLowerCase().replace("_", " ");
 		}
 		
+		// Anvils
+		if( item.getTypeId() == 145 ){
+			// @todo this needs work, because there's a range
+			// but I can't find information on what it is
+			if( item.getDurability() == 1 ){
+				item_name = "slightly damaged anvil";
+			}
+			else if( item.getDurability() == 2 ){
+				item_name = "very damaged anvil";
+			}
+		}
+		
 		// Written books
 		if(item.getType().equals( Material.WRITTEN_BOOK )){
 	        BookMeta meta = (BookMeta) item.getItemMeta();
