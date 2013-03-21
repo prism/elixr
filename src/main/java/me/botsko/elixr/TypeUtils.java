@@ -2,9 +2,13 @@ package me.botsko.elixr;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.bukkit.ChatColor;
 
 public class TypeUtils {
 	
@@ -33,6 +37,44 @@ public class TypeUtils {
 	public static float formatDouble( double val ){
     	return Float.parseFloat(new DecimalFormat("#.##").format(val));
     }
+	
+	
+	/**
+	 * Replaces string template placeholders with values in a Hashtable.
+	 * Text should be formatted with %(key) type placeholders.
+	 * @param key
+	 * @param replacer
+	 * @return
+	 */
+	public static String getStringFromTemplate( String msg, Hashtable<String,String> replacer ){
+		if( msg != null && !replacer.isEmpty() ){
+			for (Entry<String,String> entry : replacer.entrySet()){
+			    msg = msg.replace("%("+entry.getKey()+")", entry.getValue());
+			}
+		}
+		return msg;
+	}
+	
+	
+	/**
+	 * Converts colors place-holders.
+	 * @param text
+	 * @return
+	 */
+	public static String colorize(String text){
+        return ChatColor.translateAlternateColorCodes('&', text);
+    }
+	
+	
+	/**
+	 * Strips all text format codes - from colors codes like &2 to text format codes
+	 * like &k
+	 * @param text
+	 * @return
+	 */
+	public static String stripTextFormatCodes( String text ){
+		return ChatColor.stripColor( text.replaceAll("(&([a-z0-9A-Z]))", "") );
+	}
 	
 	
 	/**
