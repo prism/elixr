@@ -2,11 +2,14 @@ package me.botsko.elixr;
 
 import java.util.Map;
 
+import org.bukkit.FireworkEffect;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.FireworkEffectMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -90,8 +93,6 @@ public class ItemUtils {
 		
 		// Anvils
 		if( item.getTypeId() == 145 ){
-			// @todo this needs work, because there's a range
-			// but I can't find information on what it is
 			if( item.getDurability() == 1 ){
 				item_name = "slightly damaged anvil";
 			}
@@ -134,6 +135,34 @@ public class ItemUtils {
 				item_name += " " + EnchantmentUtils.getClientSideEnchantmentName( ench.getKey(), ench.getValue() );
 				item_name += (i < enchs.size() ? ", " : "");
 				i++;
+			}
+		}
+		
+		// Fireworks
+		if( item.getTypeId() == 402 ){
+			FireworkEffectMeta fireworkMeta = (FireworkEffectMeta) item.getItemMeta();
+			if( fireworkMeta.hasEffect() ){
+				FireworkEffect effect = fireworkMeta.getEffect();
+				if( !effect.getColors().isEmpty() ){
+					item_name += " " + effect.getColors().size() + " colors";
+//					int[] effectColors = new int[ effect.getColors().size() ];
+//					for (Color effectColor : effect.getColors()){
+////						item_name += effectColor.
+//					}
+				}
+				if( !effect.getFadeColors().isEmpty() ){
+					item_name += " " + effect.getFadeColors().size() + " fade colors";
+//					int[] fadeColors = new int[ effect.getColors().size() ];
+//				    for (Color fadeColor : effect.getFadeColors()){
+////				    	item_name += fadeColor.asRGB();
+//				    };
+				}
+				if(effect.hasFlicker()){
+					item_name += " flickering";
+				}
+				if(effect.hasTrail()){
+					item_name += " with trail";
+				}
 			}
 		}
 		
@@ -193,5 +222,30 @@ public class ItemUtils {
     		return false;
     	}
     	return true;
+    }
+    
+    
+    /**
+     * Drop an item at a given location.
+     *
+     * @param location The location to drop the item at
+     * @param itemStack The item to drop
+     */
+    public static void dropItem(Location location, ItemStack itemStack) {
+        location.getWorld().dropItemNaturally(location, itemStack);
+    }
+    
+    
+    /**
+	 * Drop items at a given location.
+	 *
+	 * @param location The location to drop the items at
+	 * @param is The items to drop
+	 * @param quantity The amount of items to drop
+	 */
+    public static void  dropItem( Location location, ItemStack is, int quantity ) {
+        for (int i = 0; i < quantity; i++) {
+            dropItem(location, is);
+        }
     }
 }
