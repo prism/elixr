@@ -86,7 +86,7 @@ public class DeathUtils {
         else if(damageCause.equals(DamageCause.MAGIC)){
         	return "potion";
         }
-        return null;
+        return damageCause.name().toLowerCase();
 	}
 	
 	
@@ -103,47 +103,49 @@ public class DeathUtils {
 		String cause = getCauseNiceName( victim );
 		
         if( victim instanceof Player ){
-        	return ((Player)victim).getKiller().getName();
-        } else {
+        	Player killer = ((Player)victim).getKiller();
+        	if( killer != null ){
+        		return killer.getName();
+        	}
+        }
         	
-            if(cause == "mob"){
-            	
-            	Entity killer = ((EntityDamageByEntityEvent)victim.getLastDamageCause()).getDamager();
+        if(cause == "mob"){
+        	
+        	Entity killer = ((EntityDamageByEntityEvent)victim.getLastDamageCause()).getDamager();
 
-            	// Playa!
-            	if( killer instanceof Player ){
-            		return ((Player)killer).getName(); 
-            	}
-            	// Which skeleton type?
-            	else if (killer instanceof Skeleton){
-            		Skeleton skele = (Skeleton) killer;
-            		if(skele.getSkeletonType() == SkeletonType.WITHER){
-            			return "witherskeleton";
-            		} else {
-            			return "skeleton";
-            		}
-            	}
-            	// Shot!
-            	else if (killer instanceof Arrow){
-            		return "skeleton";
-            	}
-            	// Aggressive wolves
-            	else if (killer instanceof Wolf){
-                    Wolf wolf = (Wolf)killer;
-                    if(wolf.isTamed()){
-                        if(wolf.getOwner() instanceof Player || wolf.getOwner() instanceof OfflinePlayer ){
-                        	return "pvpwolf";
-                        } else {
-                        	return "wolf";
-                        }
+        	// Playa!
+        	if( killer instanceof Player ){
+        		return ((Player)killer).getName(); 
+        	}
+        	// Which skeleton type?
+        	else if (killer instanceof Skeleton){
+        		Skeleton skele = (Skeleton) killer;
+        		if(skele.getSkeletonType() == SkeletonType.WITHER){
+        			return "witherskeleton";
+        		} else {
+        			return "skeleton";
+        		}
+        	}
+        	// Shot!
+        	else if (killer instanceof Arrow){
+        		return "skeleton";
+        	}
+        	// Aggressive wolves
+        	else if (killer instanceof Wolf){
+                Wolf wolf = (Wolf)killer;
+                if(wolf.isTamed()){
+                    if(wolf.getOwner() instanceof Player || wolf.getOwner() instanceof OfflinePlayer ){
+                    	return "pvpwolf";
                     } else {
                     	return "wolf";
                     }
-            	}
-            	else {
-            		return killer.getType().getName().toLowerCase();
-            	}
-            }
+                } else {
+                	return "wolf";
+                }
+        	}
+        	else {
+        		return killer.getType().getName().toLowerCase();
+        	}
         }
         return cause;
 	}
