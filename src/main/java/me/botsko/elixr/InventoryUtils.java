@@ -154,12 +154,7 @@ public class InventoryUtils {
 	 * @throws Exception 
 	 */
 	public static void movePlayerInventoryToContainer( PlayerInventory inv, Block target, int filter ) throws Exception{
-		
 		InventoryHolder container = (InventoryHolder) target.getState();
-		if( !InventoryUtils.isEmpty( inv ) ){
-			throw new Exception("Target container is not empty");
-		}
-		
 		if( !moveInventoryToInventory( inv, container.getInventory(), false, filter ) ){
 			throw new Exception("Target container is full.");
 		}
@@ -174,14 +169,8 @@ public class InventoryUtils {
 	 * @throws Exception 
 	 */
 	public static void moveContainerInventoryToPlayer( PlayerInventory inv, Block target, int filter ) throws Exception{
-		
 		InventoryHolder container = (InventoryHolder) target.getState();
-		if( !InventoryUtils.isEmpty( inv ) ){
-			throw new Exception("Target container is not empty");
-		}
-		
 		moveInventoryToInventory( container.getInventory(), inv, false, filter );
-
 	}
 	
 	
