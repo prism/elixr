@@ -396,6 +396,7 @@ items:
     '133:0': [emeraldblock]
     '152:0': [redstoneblock]
     '154:0': [hopper]
+    '158:0': [dropper]
     '406:0': [quartz]
     '155:0': [quartzblock]
     '156:0': [quartzstairs]
