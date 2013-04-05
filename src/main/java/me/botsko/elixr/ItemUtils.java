@@ -218,7 +218,7 @@ public class ItemUtils {
     	}
     	// Has meta
     	ItemMeta im = item.getItemMeta();
-    	if(im != null){
+    	if( im.hasDisplayName() || im.hasEnchants() || im.hasLore() ){
     		return false;
     	}
     	return true;
