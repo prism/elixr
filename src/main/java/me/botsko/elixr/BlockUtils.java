@@ -14,9 +14,8 @@ public class BlockUtils {
 	
 	
 	/**
-	 * Returns whether or not the plugin may place a material,
-	 * so that we can avoid including dangerous items with an
-	 * applier.
+	 * Determines if the existing block at a location is
+	 * something that's commonly acceptable to replace.
 	 * 
 	 * @param block
 	 * @return
@@ -31,6 +30,9 @@ public class BlockUtils {
 			case STATIONARY_WATER:
 			case STATIONARY_LAVA:
 			case WATER:
+			case SNOW:
+			case SNOW_BLOCK:
+			case LONG_GRASS:
 				return true;
 			default:
 				return false;

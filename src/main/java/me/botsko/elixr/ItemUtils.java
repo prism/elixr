@@ -243,7 +243,7 @@ public class ItemUtils {
 	 * @param is The items to drop
 	 * @param quantity The amount of items to drop
 	 */
-    public static void  dropItem( Location location, ItemStack is, int quantity ) {
+    public static void dropItem( Location location, ItemStack is, int quantity ) {
         for (int i = 0; i < quantity; i++) {
             dropItem(location, is);
         }
