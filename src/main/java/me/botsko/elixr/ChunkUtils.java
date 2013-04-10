@@ -13,7 +13,7 @@ public class ChunkUtils {
 	
 
 	/**
-	 * 
+	 * Resets the preview border blocks
 	 * @param player
 	 * @param blocks
 	 */
@@ -25,7 +25,7 @@ public class ChunkUtils {
 	
 	
 	/**
-	 * 
+	 * Sets a block in preview mode around the border of a chunk
 	 * @param player
 	 * @param blocks
 	 */
@@ -37,7 +37,7 @@ public class ChunkUtils {
 	
 	
 	/**
-	 * 
+	 * Returns the minimum vector for the chunk
 	 * @param chunk
 	 * @return
 	 */
@@ -49,7 +49,7 @@ public class ChunkUtils {
 	
 	
 	/**
-	 * 
+	 * Returns the maximum vector for the chunk
 	 * @param chunk
 	 * @return
 	 */
@@ -63,7 +63,7 @@ public class ChunkUtils {
 
 	
 	/**
-	 * 
+	 * Returns an array of boundary blocks at a single Y for the current chunk
 	 * @param chunk
 	 * @return
 	 */
