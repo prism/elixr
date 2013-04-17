@@ -135,6 +135,8 @@ public class BlockUtils {
 			|| m.equals(Material.PORTAL)
 			|| m.equals(Material.PISTON_EXTENSION)
 			|| m.equals(Material.PISTON_MOVING_PIECE)
+			|| m.equals(Material.PISTON_BASE) // Fake entry, the base always breaks if the extension is lost
+			|| m.equals(Material.PISTON_STICKY_BASE)
 			|| m.equals(Material.REDSTONE_TORCH_OFF)
 			|| m.equals(Material.REDSTONE_TORCH_ON)
 			|| m.equals(Material.TRAP_DOOR)){

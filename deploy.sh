@@ -18,6 +18,8 @@ echo "Setting Version: $nameNoV"
 cp pom.xml ../pom-old.xml
 mv pom.xml pom-edit.xml
 
+# javadoc -d docs-$name -sourcepath src/main/java -subpackages me.botsko.elixr
+
 # add in revision
 sed -e "s/nightly/$nameNoV/g" pom-edit.xml > pom.xml
 rm pom-edit.xml
