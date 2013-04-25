@@ -116,6 +116,33 @@ public class BlockUtils {
 	
 	
 	/**
+	 * 
+	 * @param source
+	 * @param surrounding
+	 * @return
+	 */
+	public static Block findFirstSurroundingBlockOfType( Block source, Material surrounding ){
+		Block blockToCheck = source.getRelative(BlockFace.EAST);
+		if( blockToCheck.getType().equals(surrounding) ){
+			return blockToCheck;
+		}
+		blockToCheck = source.getRelative(BlockFace.WEST);
+		if( blockToCheck.getType().equals(surrounding) ){
+			return blockToCheck;
+		}
+		blockToCheck = source.getRelative(BlockFace.NORTH);
+		if( blockToCheck.getType().equals(surrounding) ){
+			return blockToCheck;
+		}
+		blockToCheck = source.getRelative(BlockFace.SOUTH);
+		if( blockToCheck.getType().equals(surrounding) ){
+			return blockToCheck;
+		}
+		return null;
+	}
+	
+	
+	/**
 	 * Determine whether or not a block is going to detach
 	 * from the side of a block.
 	 * 
@@ -329,6 +356,9 @@ public class BlockUtils {
 			if(b.isHeadOfBed()){
 	            return block.getRelative(b.getFacing().getOppositeFace());
 	        }
+		}
+		if( block.getType().equals(Material.CHEST) ){
+			return findFirstSurroundingBlockOfType( block, Material.CHEST );
 		}
 		return null;
 	}
