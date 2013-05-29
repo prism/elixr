@@ -1,6 +1,6 @@
 # elixr
 
-elixr is a utility API for Bukkit-based plugins. All classes contain static methods that you can use from your plugin - no other dependancies other than elixr iteself. Elixr is being released as open source with the hope that you'll use and contribute new code!
+elixr is a utility API for Bukkit-based plugins. All classes contain static methods that you can use from your plugin - no other dependencies other than elixr itself. Elixr is being released as open source with the hope that you'll use and contribute new code!
 
 elixr was originally extracted from code too-often shared between our own plugins including Prism, Craftys, DarkMythos, Inventory Toolkit, Darmok, dhmcDeath, and more.
 
@@ -9,10 +9,10 @@ elixr was originally extracted from code too-often shared between our own plugin
 - Blocks - Including finding block relationships, handling double-length blocks, and more.
 - Chunk - Identifying the edges of chunks, min/max vectors.
 - Date - Converting to/from in-game date strings like Prism's time parameter
-- Death - Propertly identifying the killer/victim, weapon, and more
+- Death - Properly identifying the killer/victim, weapon, and more
 - Enchantment - Name conversion utilities
 - Entity - Location, nearby items, etc.
-- Experience - Properly add and substract XP
+- Experience - Properly add and subtract XP
 - Inventory - Logic for items in an inventory, stacking, sorting, moving, and more
 - Item - Logic for full item names, percentage used, quantity strings, and more
 - Type - Number/string logic
