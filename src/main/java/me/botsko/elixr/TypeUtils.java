@@ -178,6 +178,7 @@ public class TypeUtils {
 	 * @return
 	 */
 	public static String padStringRight( String str, int desiredLength ){
+		if( str.length() >= desiredLength ) return str.substring(desiredLength);
 		StringBuilder sb = new StringBuilder();
 		int rest = desiredLength - str.length();
 		for(int i = 1; i < rest; i++){

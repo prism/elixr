@@ -22,12 +22,11 @@ nameNoV=`echo $name | cut -c 2-`
 
 echo "Setting Version: $nameNoV"
 
-if [ "$2" == "release" ]; then
-
-	# generate docs
+# generate docs
 	# javadoc -d docs-$name -sourcepath src/main/java -subpackages me.botsko.prism
-else
-	nameNoV = "$nameNoV-SNAPSHOT"
+
+if [ "$2" != "release" ]; then
+	nameNoV="$nameNoV-SNAPSHOT"
 fi
 
 # Build maven
