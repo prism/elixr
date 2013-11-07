@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ $# -ne 1 ]; then
-	echo 1>&2 Usage: ./deploy.sh master
+if [ $# -ne 2 ]; then
+	echo 1>&2 Usage: ./build.sh branch release|none
 	exit 0
 fi
 
@@ -11,22 +11,26 @@ git checkout $1
 # get the git revision number
 gitvers=`git describe`
 
-nameNoV=`echo $gitvers | cut -c 2-`
+name=""
+if [ "$1" == "master" ]; then
+	name=$gitvers
+else
+	name="$gitvers-$1"
+fi
+
+nameNoV=`echo $name | cut -c 2-`
 
 echo "Setting Version: $nameNoV"
 
-cp pom.xml ../pom-old.xml
-mv pom.xml pom-edit.xml
+if [ "$2" == "release" ]; then
 
-# javadoc -d docs-$name -sourcepath src/main/java -subpackages me.botsko.elixr
-
-# add in revision
-sed -e "s/nightly/$nameNoV/g" pom-edit.xml > pom.xml
-rm pom-edit.xml
+	# generate docs
+	# javadoc -d docs-$name -sourcepath src/main/java -subpackages me.botsko.prism
+else
+	nameNoV = "$nameNoV-SNAPSHOT"
+fi
 
 # Build maven
-mvn deploy
+mvn deploy -Ddescribe=$nameNoV
 
-mv ../pom-old.xml pom.xml
-
-echo "BUILD COMPLETE"
+echo "DEPLOY COMPLETE"

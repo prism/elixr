@@ -169,4 +169,20 @@ public class TypeUtils {
 		}
 		return count;
 	}
+	
+	
+	/**
+	 * 
+	 * @param str
+	 * @param desiredLength
+	 * @return
+	 */
+	public static String padStringRight( String str, int desiredLength ){
+		StringBuilder sb = new StringBuilder();
+		int rest = desiredLength - str.length();
+		for(int i = 1; i < rest; i++){
+			sb.append(" ");
+		}
+		return str+sb.toString();
+	}
 }
