@@ -219,6 +219,7 @@ public class BlockUtils {
 			case CARROT:
 			case DEAD_BUSH:
 			case DETECTOR_RAIL:
+			case DOUBLE_PLANT:
 			case POTATO:
 			case CROPS:
 			case DIODE:
@@ -581,6 +582,7 @@ public class BlockUtils {
 			case COCOA: // different from pop off list
 			case DEAD_BUSH:
 			case DETECTOR_RAIL:
+			case DOUBLE_PLANT:
 			case POTATO:
 			case CROPS:
 			case DIODE:
