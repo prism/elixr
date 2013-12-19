@@ -569,6 +569,22 @@ public class BlockUtils {
 	
 	
 	/**
+	 * Properly sets the second-tier of a double-block tall plant.
+	 * 
+	 * @param originalBlock
+	 * @param typeid
+	 * @param subid
+	 */
+	public static void properlySetDoublePlant( Block originalBlock, int typeid, byte subid ){
+		if( !originalBlock.getType().equals(Material.DOUBLE_PLANT) ) return;
+		Block above = originalBlock.getRelative(BlockFace.UP);
+		if( !isAcceptableForBlockPlace( above.getType() ) ) return;
+		above.setTypeId(typeid);
+		above.setData((byte)subid);
+	}
+	
+	
+	/**
 	 * 
 	 * @param m
 	 * @return
