@@ -579,6 +579,8 @@ public class BlockUtils {
 		if( !originalBlock.getType().equals(Material.DOUBLE_PLANT) ) return;
 		Block above = originalBlock.getRelative(BlockFace.UP);
 		if( !isAcceptableForBlockPlace( above.getType() ) ) return;
+		// choose an acceptable subid
+		if( typeid == 175 && subid < 8 ) subid = 8;
 		above.setTypeId(typeid);
 		above.setData((byte)subid);
 	}
