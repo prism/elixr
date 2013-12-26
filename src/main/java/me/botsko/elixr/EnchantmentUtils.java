@@ -66,6 +66,12 @@ public class EnchantmentUtils {
 		else if(name.equalsIgnoreCase("looting")){
 			return Enchantment.LOOT_BONUS_MOBS;
 		}
+		else if(name.equalsIgnoreCase("lure")){
+			return Enchantment.LURE;
+		}
+		else if(name.equalsIgnoreCase("luck")){
+			return Enchantment.LUCK;
+		}
 		else if(name.equalsIgnoreCase("power")){
 			return Enchantment.ARROW_DAMAGE;
 		}
@@ -162,7 +168,7 @@ public class EnchantmentUtils {
 			ench_name = "aqua affinity";
 		}
 		else {
-			// can leave as-is: SILK_TOUCH, FIRE_ASPECT, KNOCKBACK, THORNS
+			// can leave as-is: SILK_TOUCH, FIRE_ASPECT, KNOCKBACK, THORNS, LUCK, LURE
 			ench_name = ench.getName().toLowerCase().replace("_", " ");
 		}
 		
