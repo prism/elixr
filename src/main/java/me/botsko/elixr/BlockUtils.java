@@ -358,8 +358,8 @@ public class BlockUtils {
 	            return block.getRelative(b.getFacing().getOppositeFace());
 	        }
 		}
-		if( block.getType().equals(Material.CHEST) ){
-			return findFirstSurroundingBlockOfType( block, Material.CHEST );
+		if( block.getType().equals(Material.CHEST) || block.getType().equals(Material.TRAPPED_CHEST) ){
+			return findFirstSurroundingBlockOfType( block, block.getType() );
 		}
 		return null;
 	}
