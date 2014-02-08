@@ -1,9 +1,9 @@
 package me.botsko.elixr;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,7 +83,7 @@ public class TypeUtils {
 	 * @param delimiter
 	 * @return
 	 */
-	public static String join(ArrayList<String> s, String delimiter) {
+	public static String join(List<String> s, String delimiter) {
 		StringBuffer buffer = new StringBuffer();
 		Iterator<?> iter = s.iterator();
 		while (iter.hasNext()) {
