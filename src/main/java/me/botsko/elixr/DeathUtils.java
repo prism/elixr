@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.projectiles.ProjectileSource;
 
 public class DeathUtils {
 
@@ -40,7 +41,10 @@ public class DeathUtils {
 			// Arrow?
 			if(entityDamageByEntityEvent.getDamager() instanceof Arrow){
 				Arrow arrow = (Arrow) entityDamageByEntityEvent.getDamager();
-				killer = arrow.getShooter();
+				ProjectileSource source = arrow.getShooter();
+				if( source instanceof Player ){
+					killer = ((Player)source);
+				}
 			} else {
 				killer = entityDamageByEntityEvent.getDamager();
 			}
