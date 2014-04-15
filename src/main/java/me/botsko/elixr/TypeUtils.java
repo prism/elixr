@@ -73,7 +73,7 @@ public class TypeUtils {
 	 * @return
 	 */
 	public static String stripTextFormatCodes( String text ){
-		return ChatColor.stripColor( text.replaceAll("(&([a-z0-9A-Z]))", "") );
+		return ChatColor.stripColor( text.replaceAll("(&+([a-z0-9A-Z])+)", "") );
 	}
 	
 	
