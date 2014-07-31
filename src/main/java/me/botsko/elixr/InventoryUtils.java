@@ -3,6 +3,7 @@ package me.botsko.elixr;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -16,7 +17,30 @@ import org.bukkit.inventory.PlayerInventory;
  *
  */
 public class InventoryUtils {
-	
+    
+    /**
+     * Does the player have anything in their inv?
+     * @param p
+     * @return
+     */
+    public static boolean playerInvIsEmpty( Player p ){
+        for( ItemStack item : p.getInventory().getContents() ){
+            if( item != null ) return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Does the player have any armor?
+     * @param p
+     * @return
+     */
+    public static boolean playerArmorIsEmpty( Player p ){
+        for( ItemStack item : p.getInventory().getArmorContents() ){
+            if( item != null && !item.getType().equals( Material.AIR ) ) return false;
+        }
+        return true;
+    }
 	
 	/**
 	 * Returns the slot id of a specific item type, or -1 if none
@@ -35,7 +59,6 @@ public class InventoryUtils {
 		}
 		return -1;
 	}
-	
 	
 	/**
 	 * Moves a specific item to the player's hand, returns false if the item doesn't exist in the inventory
@@ -59,7 +82,6 @@ public class InventoryUtils {
 		return false;
 	}
 	
-	
 	/**
 	 * Whether or not the player has an empty hand
 	 * @param inv
@@ -69,7 +91,6 @@ public class InventoryUtils {
 		return (inv.getItemInHand().getTypeId() == 0);
 	}
 	
-	
 	/**
 	 * Adds an item to the inventory, returns a hashmap of leftovers
 	 * @param player
@@ -77,7 +98,6 @@ public class InventoryUtils {
 	public static HashMap<Integer,ItemStack> addItemToInventory( Inventory inv, ItemStack item ){
 		return inv.addItem(item);
 	}
-	
 	
 	/**
 	 * 
@@ -108,7 +128,6 @@ public class InventoryUtils {
 		return false;
 	}
 	
-	
 	/**
 	 * Subtract a specific quantity from an inventory slots item stack.
 	 * @param inv
@@ -125,7 +144,6 @@ public class InventoryUtils {
 		}
 	}
 	
-	
 	/**
 	 * Drop items at player's location.
 	 * @param leftovers
@@ -138,7 +156,6 @@ public class InventoryUtils {
 			}
 		}
 	}
-	
 	
 	/**
 	 * Is an inventory fully empty
@@ -156,7 +173,6 @@ public class InventoryUtils {
 		return !ret;
 	}
 	
-	
 	/**
 	 * 
 	 * @param player
@@ -171,7 +187,6 @@ public class InventoryUtils {
 		}
 	}
 	
-	
 	/**
 	 * 
 	 * @param player
@@ -183,7 +198,6 @@ public class InventoryUtils {
 		InventoryHolder container = (InventoryHolder) target.getState();
 		moveInventoryToInventory( container.getInventory(), inv, false, filter );
 	}
-	
 	
 	/**
 	 * 
@@ -228,7 +242,6 @@ public class InventoryUtils {
 		return false;
 	}
 	
-	
 	/**
 	 * 
 	 * @param stack
@@ -239,7 +252,6 @@ public class InventoryUtils {
         return sortItemStack(stack, 0, stack.length, player);
     }
 
-    
     /**
      * 
      * @param stack
@@ -253,7 +265,6 @@ public class InventoryUtils {
         recQuickSort(stack, start, end - 1);
         return stack;
     }
-
     
     /**
      * 
@@ -303,7 +314,6 @@ public class InventoryUtils {
         }
         return items;
     }
-
     
     /**
      * 
@@ -317,7 +327,6 @@ public class InventoryUtils {
         list[first] = list[second];
         list[second] = temp;
     }
-
     
     /**
      * 
@@ -362,7 +371,6 @@ public class InventoryUtils {
             return 0;
         }
     }
-
     
     /**
      * 
@@ -395,7 +403,6 @@ public class InventoryUtils {
         return smallIndex;
 
     }
-
     
     /**
      * 
