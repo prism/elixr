@@ -19,6 +19,15 @@ import org.bukkit.inventory.PlayerInventory;
 public class InventoryUtils {
     
     /**
+     * Easier to supress depracation errors
+     * @param p
+     */
+    @SuppressWarnings("deprecation")
+    public static void updateInventory( Player p ){
+        p.updateInventory();
+    }
+    
+    /**
      * Does the player have anything in their inv?
      * @param p
      * @return

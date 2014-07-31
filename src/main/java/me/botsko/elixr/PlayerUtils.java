@@ -1,11 +1,50 @@
 package me.botsko.elixr;
 
+import org.bukkit.Bukkit;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 public class PlayerUtils {
-	
-	
+    
+    
+    /**
+     * 
+     * @param p
+     */
+    public static void resetPlayer( Player p ){
+        
+        // Inventory
+        p.getInventory().clear();
+        p.getInventory().setArmorContents(null);
+        InventoryUtils.updateInventory(p);
+        
+        // Only if player alive
+        if( !p.isDead() ){
+            
+            // Health/Food
+            p.setHealth( p.getMaxHealth() );
+            p.setFoodLevel( 20 );
+            
+            // Potion Effects
+            for (final PotionEffect effect : p.getActivePotionEffects()) {
+                p.removePotionEffect(effect.getType());
+            }
+            
+            // On fire
+            p.setFireTicks( 0 );
+            
+        }
+        
+        // Scoreboard
+        p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        
+        // Turn off flight
+        p.setAllowFlight( false );
+        p.setFlying( false );
+
+    }
+
 	/**
 	 * http://forums.bukkit.org/threads/directions.91550/#post-1265631
 	 * @param player
