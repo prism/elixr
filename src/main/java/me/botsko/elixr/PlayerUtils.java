@@ -15,6 +15,7 @@ public class PlayerUtils {
     public static void resetPlayer( Player p ){
         
         // Inventory
+        p.closeInventory();
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
         InventoryUtils.updateInventory(p);

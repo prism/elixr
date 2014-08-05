@@ -166,6 +166,7 @@ public class BlockUtils {
 			|| m.equals(Material.PISTON_STICKY_BASE)
 			|| m.equals(Material.REDSTONE_TORCH_OFF)
 			|| m.equals(Material.REDSTONE_TORCH_ON)
+			|| m.equals(Material.TRIPWIRE_HOOK)
 			|| m.equals(Material.TRAP_DOOR)){
 			return true;
 		}
