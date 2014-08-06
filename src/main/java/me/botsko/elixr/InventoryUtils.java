@@ -189,9 +189,9 @@ public class InventoryUtils {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static void movePlayerInventoryToContainer( PlayerInventory inv, Block target, int filter ) throws Exception{
+	public static void movePlayerInventoryToContainer( PlayerInventory inv, Block target, HashMap<Integer,Short> filters ) throws Exception{
 		InventoryHolder container = (InventoryHolder) target.getState();
-		if( !moveInventoryToInventory( inv, container.getInventory(), false, filter ) ){
+		if( !moveInventoryToInventory( inv, container.getInventory(), false, filters ) ){
 			throw new Exception("Target container is full.");
 		}
 	}
@@ -203,9 +203,9 @@ public class InventoryUtils {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static void moveContainerInventoryToPlayer( PlayerInventory inv, Block target, int filter ) throws Exception{
+	public static void moveContainerInventoryToPlayer( PlayerInventory inv, Block target, HashMap<Integer,Short> filters ) throws Exception{
 		InventoryHolder container = (InventoryHolder) target.getState();
-		moveInventoryToInventory( container.getInventory(), inv, false, filter );
+		moveInventoryToInventory( container.getInventory(), inv, false, filters );
 	}
 	
 	/**
@@ -215,7 +215,7 @@ public class InventoryUtils {
 	 * @param fullFlag
 	 * @return
 	 */
-	public static boolean moveInventoryToInventory( Inventory from, Inventory to, boolean fullFlag, int filter ) {
+	public static boolean moveInventoryToInventory( Inventory from, Inventory to, boolean fullFlag, HashMap<Integer,Short> filters ) {
 
 		HashMap<Integer, ItemStack> leftovers;
 
@@ -227,23 +227,24 @@ public class InventoryUtils {
 				if (item != null && to.firstEmpty() != -1) {
 					
 					boolean shouldTransfer = false;
-					if(filter > 0){
-						if(item.getTypeId() == filter){
-							shouldTransfer = true;
-						}
+					if( filters.size() > 0 ){
+		                for( Entry<Integer,Short> entry : filters.entrySet() ){
+		                    if( entry.getKey() == item.getTypeId() && entry.getValue() == item.getDurability() ){
+		                        shouldTransfer = true;
+		                    }
+		                }
+		            }
+					
+					if( !shouldTransfer ) continue;
+
+					leftovers = to.addItem(item);
+					if (leftovers.size() == 0) {
+						from.removeItem(item);
 					} else {
-						shouldTransfer = true;
+						from.removeItem(item);
+						from.addItem(leftovers.get(0));
 					}
 					
-					if(shouldTransfer){
-						leftovers = to.addItem(item);
-						if (leftovers.size() == 0) {
-							from.removeItem(item);
-						} else {
-							from.removeItem(item);
-							from.addItem(leftovers.get(0));
-						}
-					}
 				}
 			}
 			return true;
