@@ -233,6 +233,8 @@ public class InventoryUtils {
 		                        shouldTransfer = true;
 		                    }
 		                }
+		            } else {
+		                shouldTransfer = true;
 		            }
 					
 					if( !shouldTransfer ) continue;
