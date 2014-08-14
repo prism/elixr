@@ -27,6 +27,18 @@ public class Messenger {
 	}
 	
 	/**
+     * 
+     * @param msg
+     * @return
+     */
+    public String playerSuccess(String msg){
+        if(msg != null){
+            return ChatColor.GOLD + "["+plugin_name+"] " + ChatColor.GREEN + msg;
+        }
+        return "";
+    }
+	
+	/**
 	 * 
 	 * @param msg
 	 * @return
