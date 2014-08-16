@@ -178,8 +178,13 @@ public class CommandManager {
             // throw exception
             return;
         }
-        method.invoke( null, sender, methodArgs );
-        
+        try {
+            method.invoke( null, sender, methodArgs );
+        } catch (InvocationTargetException ite) {
+            if (ite.getCause() instanceof CommandArgumentException){
+                throw (CommandArgumentException) ite.getCause();
+            }
+        }
     }
     
     /**
