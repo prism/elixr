@@ -1,4 +1,4 @@
-package me.botsko.elixr;
+package us.dhmc.elixr;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

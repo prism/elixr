@@ -1,4 +1,4 @@
-package me.botsko.elixr;
+package us.dhmc.elixr;
 
 import java.io.BufferedWriter;
 import java.io.File;

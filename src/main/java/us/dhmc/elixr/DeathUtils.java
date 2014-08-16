@@ -1,4 +1,4 @@
-package me.botsko.elixr;
+package us.dhmc.elixr;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Arrow;

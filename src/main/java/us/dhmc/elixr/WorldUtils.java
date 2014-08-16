@@ -1,4 +1,4 @@
-package me.botsko.elixr;
+package us.dhmc.elixr;
 
 import org.bukkit.Location;
 import org.bukkit.World.Environment;

@@ -1,4 +1,4 @@
-package me.botsko.elixr;
+package us.dhmc.elixr;
 
 import java.text.DecimalFormat;
 import java.util.Hashtable;
