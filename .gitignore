@@ -1,3 +1,5 @@
+deploy.sh
+
 # Numerous always-ignore extensions
 *.diff
 *.err
