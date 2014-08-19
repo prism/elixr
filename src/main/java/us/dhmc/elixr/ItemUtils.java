@@ -15,6 +15,15 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 public class ItemUtils {
+    
+    /**
+     * 
+     * @param item
+     * @return
+     */
+    public static boolean isValidItem( ItemStack item ){
+        return ( item != null && !item.getType().equals( Material.AIR ) );
+    }
 	
 	
 	/**
