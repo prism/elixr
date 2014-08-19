@@ -70,6 +70,49 @@ public class InventoryUtils {
 	}
 	
 	/**
+	 * 
+	 * @param player
+	 * @param desiredQuantity
+	 * @return
+	 */
+	public static ItemStack extractItemsMatchingHeldItemFromPlayer( Player player, int desiredQuantity ){
+        
+        if( player == null || !ItemUtils.isValidItem( player.getItemInHand() ) ){
+            throw new IllegalArgumentException("Invalid player or invalid held item.");
+        }
+        
+        int quantityFound = 0;
+        ItemStack itemDefinition = player.getItemInHand().clone();
+        
+        for( int slot = 0; slot < player.getInventory().getSize(); slot++ ){
+            ItemStack item = player.getInventory().getItem( slot );
+            if( item == null ) continue;
+            if( ItemUtils.isSameType( item, itemDefinition, true ) ){
+                
+                // check how many items we need
+                int diff = desiredQuantity - quantityFound;
+
+                // Consume whole stack
+                if( diff > item.getAmount() ){
+                    quantityFound += item.getAmount();
+                    player.getInventory().clear(slot);
+                }
+                // Only need a portion
+                else {
+                    quantityFound += diff;
+                   item.setAmount( item.getAmount() - diff );
+                }
+            }
+            if( desiredQuantity == quantityFound ) break;
+        }
+        
+        itemDefinition.setAmount( quantityFound );
+        
+        return itemDefinition;
+        
+    }
+	
+	/**
 	 * Moves a specific item to the player's hand, returns false if the item doesn't exist in the inventory
 	 * @param inv
 	 * @param item_id

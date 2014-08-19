@@ -24,6 +24,25 @@ public class ItemUtils {
     public static boolean isValidItem( ItemStack item ){
         return ( item != null && !item.getType().equals( Material.AIR ) );
     }
+    
+    /**
+     * 
+     * @param a
+     * @param b
+     * @param checkDura
+     * @return
+     */
+    public static boolean isSameType( ItemStack a, ItemStack b, boolean checkDura ){
+        
+        // Initial type check
+        if( !a.getType().equals( b.getType() ) ) return false;
+        
+        // Durability check
+        if( checkDura && a.getDurability() != b.getDurability() ) return false;
+        
+        return true;
+        
+    }
 	
 	
 	/**
