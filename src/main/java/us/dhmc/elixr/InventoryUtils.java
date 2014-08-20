@@ -70,12 +70,12 @@ public class InventoryUtils {
 	}
 	
 	/**
-	 * 
-	 * @param player
-	 * @param desiredQuantity
-	 * @return
-	 */
-	public static ItemStack extractItemsMatchingHeldItemFromPlayer( Player player, int desiredQuantity ){
+     * 
+     * @param player
+     * @param desiredQuantity
+     * @return
+     */
+    public static ItemStack extractItemsMatchingHeldItemFromPlayer( Player player, int desiredQuantity ){
         
         if( player == null || !ItemUtils.isValidItem( player.getItemInHand() ) ){
             throw new IllegalArgumentException("Invalid player or invalid held item.");
@@ -99,8 +99,9 @@ public class InventoryUtils {
                 }
                 // Only need a portion
                 else {
-                    quantityFound += diff;
+                   quantityFound += diff;
                    item.setAmount( item.getAmount() - diff );
+                   player.getInventory().setItem( slot, item );
                 }
             }
             if( desiredQuantity == quantityFound ) break;
