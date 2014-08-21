@@ -13,5 +13,7 @@ public @interface Argument {
     Class<? extends ArgumentValidator> validator() default ArgumentStringValidator.class;
     
     boolean joinsRemaining() default false;
+    
+    String defaultValue() default "";
 
 }

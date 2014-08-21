@@ -128,15 +128,9 @@ public class CommandManager {
                         currentArg += " "+rawArgs[i];
                     }
                 }
-
                 finalArgs.add( currentArg );
-                
             }
             
-    //        if( finalArgs.length > arguments.length ){
-    //            // @todo allow for "message" style joining
-    //            throw new CommandArgumentException("Too many arguments for command " + command.getName());
-    //        }
             // Iterate provided arguments and validate them
             for( int index = 0; index < arguments.length; index++ ){
                 
@@ -147,18 +141,25 @@ public class CommandManager {
                     throw new CommandArgumentException("Too few arguments for command " + command.getName());
                 }
                 
-                // If it's optional, but not present, skip
-                if( (index+1) > finalArgs.size() ) break;
+                // If it's optional, but not present, use default
+                if( (index+1) > finalArgs.size() ){
+                    if( !defined.defaultValue().isEmpty() ){
+                        finalArgs.add( defined.defaultValue() );
+                    } else {
+                        break;
+                    }
+                } else {
                 
-                String rawArg = finalArgs.get( index );
-                
-                // Validate
-                if( defined.validator() != null ){
-                    try {
-                        ArgumentValidator validator = defined.validator().newInstance();
-                        validator.validate( rawArg );  
-                    } catch( InstantiationException e ){
-                        e.printStackTrace();
+                    String rawArg = finalArgs.get( index );
+                    
+                    // Validate
+                    if( defined.validator() != null ){
+                        try {
+                            ArgumentValidator validator = defined.validator().newInstance();
+                            validator.validate( rawArg );  
+                        } catch( InstantiationException e ){
+                            e.printStackTrace();
+                        }
                     }
                 }
                 
