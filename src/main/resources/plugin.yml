@@ -1,0 +1,3 @@
+name: Elixr
+main: us.dhmc.plugin.elixr.Elixr
+version: 1.0
