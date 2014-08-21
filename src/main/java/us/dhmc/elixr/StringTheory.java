@@ -138,13 +138,26 @@ public class StringTheory {
                     continue;
                 }
             }
+            
+            String prefix = "";
+            String suffix = "";
+            String newWord = new String(seg).replaceAll("\\{.*\\}","|");
+            String[] chars = newWord.split("\\|");
+            if( chars.length > 1 ){
+                prefix = chars[0];
+            }
+            if( chars.length == 2 ){
+                suffix = chars[1];
+            }
 
             Matcher matcher = pattern.matcher(seg);
             boolean matchFound = false;
             while(matcher.find()){
                 
-                matchFound = true;
+                fancy.then(prefix);
                 
+                matchFound = true;
+
                 String completeToken = matcher.group(0).replace("{", "").replace("}", "");
                 String[] token = completeToken.split("\\|");
 
@@ -161,9 +174,10 @@ public class StringTheory {
                     } else {
                         TokenFilter filter = filters.get(token[1]);
                         filter.format(fancy,val);
+                        fancy.then(suffix);
                     }
                 } else {
-                    fancy.then(val+" ").color( baseline.getColor() );
+                    fancy.then(val).color( baseline.getColor() ).then(suffix+" ");
                 }
             }
             if( !matchFound ){
