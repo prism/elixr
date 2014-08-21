@@ -15,9 +15,8 @@ import org.bukkit.entity.Player;
 
 public class StringTheory {
     
-    public static class TokenFilter {
-        public void format( FancyMessage fancy, String tokenVal ){
-        }
+    public static interface TokenFilter {
+        public void format( FancyMessage fancy, String tokenVal );
     }
     public static class StringBaseline {
         private final ChatColor baseColor;
