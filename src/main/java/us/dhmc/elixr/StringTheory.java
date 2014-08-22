@@ -174,7 +174,7 @@ public class StringTheory {
                     } else {
                         TokenFilter filter = filters.get(token[1]);
                         filter.format(fancy,val);
-                        fancy.then(suffix);
+                        fancy.then(suffix+" ");
                     }
                 } else {
                     fancy.then(val).color( baseline.getColor() ).then(suffix+" ");
