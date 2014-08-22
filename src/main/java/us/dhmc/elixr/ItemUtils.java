@@ -216,17 +216,30 @@ public class ItemUtils {
      * @return
      */
     public static boolean dataValueUsedForSubitems( int id ){
-    	return id == 17 		// logs
+    	return  id == 5         // planks
+    	        || id == 17     // logs
+    	        || id == 162    // logs 2
         		|| id == 18 	// leaves
         		|| id == 24     // sandstone
         		|| id == 31 	// tallgrass
                 || id == 35 	// wool
+                || id == 38     // flowers
                 || id == 43 	// double slab
                 || id == 44 	// slab
+                || id == 95     // stained glass
                 || id == 98 	// stonebrick
                 || id == 139    // mossycobblewall
+                || id == 155    // quartz
+                || id == 159    // hard clay
+                || id == 160    // stained glass pane
+                || id == 171    // carpet
+                || id == 175    // flower/bushes
                 || id == 263 	// charcoal
                 || id == 351    // dye
+                || id == 322    // golden apple
+                || id == 349    // fish
+                || id == 125    // double wood slab
+                || id == 126    // wood slab
                 || id == 6		// saplings
                 || id == 373    // potions
         		|| id == 383    // creature eggs
