@@ -7,23 +7,26 @@ public class CommandArguments {
     
     protected final String[] rawArgs;
     protected final Map<String,Integer> named;
+    protected final Map<String,String> flags;
     
     /**
      * 
      * @param rawArgs
      */
-    public CommandArguments( String[] rawArgs, Map<String,Integer> named ){
+    public CommandArguments( String[] rawArgs, Map<String,Integer> named, Map<String,String> flags ){
         this.rawArgs = rawArgs;
         this.named = named;
+        this.flags = flags;
     }
     
     /**
      * 
      * @param rawArgs
      */
-    public CommandArguments(){
+    public CommandArguments( Map<String,String> flags ){
         this.rawArgs = new String[0];
         this.named = new HashMap<String,Integer>();
+        this.flags = flags;
     }
     
     /**
@@ -112,5 +115,23 @@ public class CommandArguments {
             return getInt( named.get( namedArg ) );
         }
         return 0;
+    }
+    
+    /**
+     * 
+     * @param flag
+     * @return
+     */
+    public boolean hasFlag( String flag ){
+        return flags.containsKey( flag );
+    }
+    
+    /**
+     * 
+     * @param flag
+     * @return
+     */
+    public String flag( String flag ){
+        return flags.get( flag );
     }
 }

@@ -21,6 +21,7 @@ import us.dhmc.elixr.ReflectionUtil;
 import us.dhmc.elixr.TypeUtils;
 import us.dhmc.elixr.commands.arguments.Argument;
 import us.dhmc.elixr.commands.arguments.ArgumentValidator;
+import us.dhmc.elixr.commands.arguments.Flag;
 import us.dhmc.elixr.commands.exceptions.CommandArgumentException;
 import us.dhmc.elixr.commands.exceptions.CommandPermissionException;
 import us.dhmc.elixr.commands.exceptions.IllegalCommandSenderException;
@@ -108,8 +109,44 @@ public class CommandManager {
             }
         }
         
-        // Arg checks
+        try {
+        
+        // raw incoming args
         String[] rawArgs = command.getArgs();
+        
+        // Flag checks
+        Flag[] flags = command.getFlags();
+        Map<String,String> foundFlags = new HashMap<String,String>();
+        if( flags != null && flags.length > 0 ){
+            for( Flag f : flags ){
+                for( String rawArg : rawArgs ){
+                    
+                    if( !rawArg.startsWith("-") ) continue;
+                    
+                    rawArg = rawArg.replace("-","");
+                    String flagKey = rawArg;
+                    String flagVal = "";
+                    if( rawArg.contains("=") ){
+                        String flagInfo[] = rawArg.split("=");
+                        flagKey = flagInfo[0];
+                        if( flagInfo.length == 2 ){
+                            flagVal = flagInfo[1];
+                        }
+                    }
+                    for( String flagAlias : f.aliases() ){
+                        if( flagKey.equalsIgnoreCase(flagAlias) ){
+                            if( f.acceptsValue() ){
+                                foundFlags.put(f.aliases()[0], flagVal );
+                            } else {
+                                foundFlags.put(f.aliases()[0], null );
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Arg checks
         Argument[] arguments = command.getArguments();
         Map<String,Integer> namedArguments = new HashMap<String,Integer>();
         CommandArguments methodArgs;
@@ -122,6 +159,7 @@ public class CommandManager {
                 if( index >= rawArgs.length ) break;
                 Argument defined = arguments[index];
                 String currentArg =  rawArgs[index];
+                if( currentArg.startsWith("-") ) continue;
                 // If it joins remaining arguments into one...
                 if( defined.joinsRemaining() ){
                     for( int i = index+1; i < rawArgs.length; i++ ){
@@ -166,13 +204,13 @@ public class CommandManager {
                 namedArguments.put( defined.name(), index );
                 
             }
-            
-            methodArgs = new CommandArguments(finalArgs.toArray(new String[finalArgs.size()]),namedArguments);
+
+            methodArgs = new CommandArguments(finalArgs.toArray(new String[finalArgs.size()]),namedArguments,foundFlags);
             
         } else {
-            methodArgs = new CommandArguments();
+            methodArgs = new CommandArguments(foundFlags);
         }
-
+        
         // We're the one handling the command
         Method method = command.getMethod();
         if( method == null ){
@@ -186,6 +224,12 @@ public class CommandManager {
                 throw (CommandArgumentException) ite.getCause();
             }
         }
+        
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+
     }
     
     /**
@@ -275,6 +319,11 @@ public class CommandManager {
             // Parse arguments
             if( cmd.arguments().length > 0 ){
                 bukkitCommand.setArguments(cmd.arguments());
+            }
+            
+            // Parse flags
+            if( cmd.flags().length > 0 ){
+                bukkitCommand.setFlags(cmd.flags());
             }
             
             // Parse children

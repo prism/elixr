@@ -24,6 +24,7 @@ import org.bukkit.plugin.Plugin;
 
 import us.dhmc.elixr.TypeUtils;
 import us.dhmc.elixr.commands.arguments.Argument;
+import us.dhmc.elixr.commands.arguments.Flag;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -46,6 +47,7 @@ public class DynamicPluginCommand extends org.bukkit.command.Command implements 
     protected Map<String,DynamicPluginCommand> aliases = new HashMap<String,DynamicPluginCommand>();
     protected String[] args;
     protected Argument[] arguments;
+    protected Flag[] flags;
     
     /**
      * 
@@ -146,6 +148,22 @@ public class DynamicPluginCommand extends org.bukkit.command.Command implements 
      */
     public Argument[] getArguments(){
         return arguments;
+    }
+    
+    /**
+     * 
+     * @param arguments
+     */
+    public void setFlags( Flag[] flags ){
+        this.flags = flags;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public Flag[] getFlags(){
+        return flags;
     }
     
     /**
