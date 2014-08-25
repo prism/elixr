@@ -2,7 +2,6 @@ package us.dhmc.elixr;
 
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -77,13 +76,12 @@ public class ItemUtils {
             if( metaB.getDisplayName() != null ) return false;
         }
         
-        
         // Coloring
         if( metaA instanceof LeatherArmorMeta ){
             if( !(metaB instanceof LeatherArmorMeta) ) return false;
             LeatherArmorMeta colorA = (LeatherArmorMeta) metaA;
             LeatherArmorMeta colorB = (LeatherArmorMeta) metaB;
-            if(colorA.getColor() != colorB.getColor()) return false;
+            if( !colorA.getColor().equals(colorB.getColor()) ) return false;
         }
 
         // Lore
@@ -150,6 +148,29 @@ public class ItemUtils {
             } else {
                 if( skullB.getOwner() != null ) return false;
             }
+        }
+        
+        // Fireworks
+        if( metaA instanceof FireworkEffectMeta ){
+            if( !(metaB instanceof FireworkEffectMeta) ) return false;
+            
+            FireworkEffectMeta fwA = (FireworkEffectMeta) metaA;
+            FireworkEffectMeta fwB = (FireworkEffectMeta) metaB;
+            
+            FireworkEffect effectA = fwA.getEffect();
+            FireworkEffect effectB = fwB.getEffect();
+            
+            // Colors
+            for( int c = 0; c < effectA.getColors().size(); c++ ){
+                if( !effectA.getColors().get(c).equals( effectB.getColors().get(c) ) ) return false;
+            }
+            // Fade colors
+            for( int c = 0; c < effectA.getFadeColors().size(); c++ ){
+                if( !effectA.getFadeColors().get(c).equals( effectB.getFadeColors().get(c) ) ) return false;
+            }
+            
+            if( effectA.hasFlicker() != effectB.hasFlicker() ) return false;
+            if( effectA.hasTrail() != effectB.hasTrail() ) return false;
         }
         
         return true;
