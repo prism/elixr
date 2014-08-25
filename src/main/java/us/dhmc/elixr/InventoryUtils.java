@@ -87,7 +87,7 @@ public class InventoryUtils {
         for( int slot = 0; slot < player.getInventory().getSize(); slot++ ){
             ItemStack item = player.getInventory().getItem( slot );
             if( item == null ) continue;
-            if( ItemUtils.isSameType( item, itemDefinition, true ) ){
+            if( ItemUtils.equals( item, itemDefinition, true ) ){
                 
                 // check how many items we need
                 int diff = desiredQuantity - quantityFound;
@@ -386,50 +386,6 @@ public class InventoryUtils {
     
     /**
      * 
-     * @author botskonet
-     *
-     */
-    private static class ComparableIS {
-
-        private ItemStack item;
-
-        public ComparableIS(ItemStack item) {
-            this.item = item;
-        }
-
-        public int compareTo(ItemStack check) {
-            // Type ID first
-            if (item == null && check != null) {
-                return -1;
-            } else if (item != null && check == null) {
-                return 1;
-            } else if (item == null && check == null) {
-                return 0;
-            } else if (item.getTypeId() > check.getTypeId()) {
-                return 1;
-            } else if (item.getTypeId() < check.getTypeId()) {
-                return -1;
-            } else if (item.getTypeId() == check.getTypeId()) {
-                if (ItemUtils.dataValueUsedForSubitems(item.getTypeId())) {
-                    if (item.getDurability() < check.getDurability()) {
-                        return 1;
-                    } else if (item.getDurability() > check.getDurability()) {
-                        return -1;
-                    }
-                }
-                // Stack size
-                if (item.getAmount() < check.getAmount()) {
-                    return -1;
-                } else if (item.getAmount() > check.getAmount()) {
-                    return 1;
-                }
-            }
-            return 0;
-        }
-    }
-    
-    /**
-     * 
      * @param list
      * @param first
      * @param last
@@ -446,13 +402,13 @@ public class InventoryUtils {
         smallIndex = first;
 
         for (int index = first + 1; index <= last; index++) {
-            ComparableIS compElem = new ComparableIS(list[index]);
+            
+            ItemStack item = list[index];
 
-            if (compElem.compareTo(pivot) < 0) {
+            if( ItemUtils.equals( item, pivot ) ){
                 smallIndex++;
                 swap(list, smallIndex, index);
             }
-
         }
 
         swap(list, first, smallIndex);

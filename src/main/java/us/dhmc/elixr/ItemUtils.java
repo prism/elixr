@@ -1,6 +1,7 @@
 package us.dhmc.elixr;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
@@ -43,6 +44,58 @@ public class ItemUtils {
         return true;
         
     }
+    
+    /**
+     * 
+     * @param a
+     * @param b
+     * @return
+     */
+    public static boolean equals( ItemStack a, ItemStack b ){
+        return equals(a,b,dataValueUsedForSubitems( a.getTypeId() ));
+    }
+    
+    /**
+     * 
+     * @param a
+     * @param b
+     * @param checkDura
+     * @return
+     */
+    public static boolean equals( ItemStack a, ItemStack b, boolean checkDura ){
+        
+        ItemMeta metaA = a.getItemMeta();
+        ItemMeta metaB = b.getItemMeta();
+        
+        if( !isSameType(a,b,checkDura) ) return false;
+        
+        if( !metaA.getDisplayName().equals( metaB.getDisplayName() ) ) return false;
+        
+        // Lore
+        if( metaA.getLore() != null && metaA.getLore() != null ){
+            for(String lore : metaA.getLore()){
+                if(!metaB.getLore().contains(lore)) return false;
+            }
+        }
+        else if( !(metaA.getLore() == null && metaB.getLore() == null) ) return false;
+        
+        // Enchants
+        if( a.getEnchantments().size() != b.getEnchantments().size() ) return false;
+        
+        // Match enchantments and levels
+        for( Entry<Enchantment,Integer> entryA : a.getEnchantments().entrySet() ){
+           
+            // If enchantment not present
+            if( !b.getEnchantments().containsKey( entryA.getKey() ) ) return false;
+            
+            // If levels don't match
+            if( b.getEnchantments().get( entryA.getKey() ).equals( entryA.getValue() ) ) return false;
+            
+        }
+        
+        return true;
+        
+     }
 	
 	
 	/**
