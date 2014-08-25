@@ -76,6 +76,15 @@ public class ItemUtils {
         } else {
             if( metaB.getDisplayName() != null ) return false;
         }
+        
+        
+        // Coloring
+        if( metaA instanceof LeatherArmorMeta ){
+            if( !(metaB instanceof LeatherArmorMeta) ) return false;
+            LeatherArmorMeta colorA = (LeatherArmorMeta) metaA;
+            LeatherArmorMeta colorB = (LeatherArmorMeta) metaB;
+            if(colorA.getColor() != colorB.getColor()) return false;
+        }
 
         // Lore
         if( metaA.getLore() != null && metaA.getLore() != null ){
@@ -86,18 +95,7 @@ public class ItemUtils {
         else if( !(metaA.getLore() == null && metaB.getLore() == null) ) return false;
         
         // Enchants
-        if( a.getEnchantments().size() != b.getEnchantments().size() ) return false;
-        
-        // Match enchantments and levels
-        for( Entry<Enchantment,Integer> entryA : a.getEnchantments().entrySet() ){
-           
-            // If enchantment not present
-            if( !b.getEnchantments().containsKey( entryA.getKey() ) ) return false;
-            
-            // If levels don't match
-            if( !b.getEnchantments().get( entryA.getKey() ).equals( entryA.getValue() ) ) return false;
-            
-        }
+        if( !enchantsEqual(a.getEnchantments(),b.getEnchantments()) ) return false;
         
         // Books
         if( metaA instanceof BookMeta ){
@@ -111,15 +109,33 @@ public class ItemUtils {
                 if( !bookA.getAuthor().equals( bookB.getAuthor() ) ) return false;
             }
             
+            if( bookA.getTitle() != null ){
+                if( !bookA.getTitle().equals( bookB.getTitle() ) ) return false;
+            }
+            
             // Pages
             if( bookA.getPageCount() != bookB.getPageCount() ) return false;
             
             for( int page = 0; page < bookA.getPages().size(); page++ ){
-                String pageContentA = bookA.getPage( page );
+                String pageContentA = bookA.getPages().get( page );
                 if( pageContentA != null ){
-                    if( !pageContentA.equals( bookB.getPage(page) ) ) return false;
+                    if( !pageContentA.equals( bookB.getPages().get(page) ) ) return false;
                 }
             }
+        }
+        
+        // Enchanted books
+        if( metaA instanceof EnchantmentStorageMeta ){
+            
+            if( !(metaB instanceof EnchantmentStorageMeta) ) return false;
+            
+            EnchantmentStorageMeta enchA = (EnchantmentStorageMeta) metaA;
+            EnchantmentStorageMeta enchB = (EnchantmentStorageMeta) metaB;
+            
+            if( enchA.hasStoredEnchants() != enchB.hasStoredEnchants() ) return false;
+            
+            if( !enchantsEqual(enchA.getStoredEnchants(),enchB.getStoredEnchants()) ) return false;
+            
         }
         
         // Skulls
@@ -138,7 +154,33 @@ public class ItemUtils {
         
         return true;
         
-     }
+    }
+    
+    /**
+     * 
+     * @param a
+     * @param b
+     * @return
+     */
+    protected static boolean enchantsEqual( Map<Enchantment,Integer> a, Map<Enchantment,Integer> b ){
+        
+        // Enchants
+        if( a.size() != b.size() ) return false;
+        
+        // Match enchantments and levels
+        for( Entry<Enchantment,Integer> entryA : a.entrySet() ){
+           
+            // If enchantment not present
+            if( !b.containsKey( entryA.getKey() ) ) return false;
+            
+            // If levels don't match
+            if( !b.get( entryA.getKey() ).equals( entryA.getValue() ) ) return false;
+            
+        }
+        
+        return true;
+        
+    }
 	
 	
 	/**
