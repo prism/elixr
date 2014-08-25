@@ -67,10 +67,16 @@ public class ItemUtils {
         ItemMeta metaA = a.getItemMeta();
         ItemMeta metaB = b.getItemMeta();
         
+        // Type/dura
         if( !isSameType(a,b,checkDura) ) return false;
         
-        if( !metaA.getDisplayName().equals( metaB.getDisplayName() ) ) return false;
-        
+        // Display name
+        if( metaA.getDisplayName() != null ){
+            if( !metaA.getDisplayName().equals( metaB.getDisplayName() ) ) return false;
+        } else {
+            if( metaB.getDisplayName() != null ) return false;
+        }
+
         // Lore
         if( metaA.getLore() != null && metaA.getLore() != null ){
             for(String lore : metaA.getLore()){
