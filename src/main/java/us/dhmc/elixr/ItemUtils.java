@@ -2,6 +2,7 @@ package us.dhmc.elixr;
 
 import java.util.Map;
 import java.util.Map.Entry;
+
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.FireworkEffectMeta;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -151,19 +153,40 @@ public class ItemUtils {
         }
         
         // Fireworks
+        if( metaA instanceof FireworkMeta ){
+            if( !(metaB instanceof FireworkMeta) ) return false;
+            
+            FireworkMeta fwA = (FireworkMeta) metaA;
+            FireworkMeta fwB = (FireworkMeta) metaB;
+            
+            if( fwA.getPower() != fwB.getPower() ) return false;
+            
+            for( int e = 0; e < fwA.getEffects().size(); e++ ){
+                if( !fwA.getEffects().get(e).equals( fwB.getEffects().get(e) ) ) return false;
+            }
+        }
+        
+        // Firework Effects
         if( metaA instanceof FireworkEffectMeta ){
             if( !(metaB instanceof FireworkEffectMeta) ) return false;
             
             FireworkEffectMeta fwA = (FireworkEffectMeta) metaA;
             FireworkEffectMeta fwB = (FireworkEffectMeta) metaB;
-            
+
             FireworkEffect effectA = fwA.getEffect();
             FireworkEffect effectB = fwB.getEffect();
+            
+            if( !effectA.getType().equals( effectB.getType() ) ) return false;
+            
+            if( effectA.getColors().size() != effectB.getColors().size() ) return false;
             
             // Colors
             for( int c = 0; c < effectA.getColors().size(); c++ ){
                 if( !effectA.getColors().get(c).equals( effectB.getColors().get(c) ) ) return false;
             }
+            
+            if( effectA.getFadeColors().size() != effectB.getFadeColors().size() ) return false;
+            
             // Fade colors
             for( int c = 0; c < effectA.getFadeColors().size(); c++ ){
                 if( !effectA.getFadeColors().get(c).equals( effectB.getFadeColors().get(c) ) ) return false;
@@ -171,6 +194,7 @@ public class ItemUtils {
             
             if( effectA.hasFlicker() != effectB.hasFlicker() ) return false;
             if( effectA.hasTrail() != effectB.hasTrail() ) return false;
+            
         }
         
         return true;
