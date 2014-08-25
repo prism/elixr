@@ -95,7 +95,7 @@ public class ItemUtils {
             if( !b.getEnchantments().containsKey( entryA.getKey() ) ) return false;
             
             // If levels don't match
-            if( b.getEnchantments().get( entryA.getKey() ).equals( entryA.getValue() ) ) return false;
+            if( !b.getEnchantments().get( entryA.getKey() ).equals( entryA.getValue() ) ) return false;
             
         }
         
