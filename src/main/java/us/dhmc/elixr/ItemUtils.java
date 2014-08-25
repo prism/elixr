@@ -99,6 +99,43 @@ public class ItemUtils {
             
         }
         
+        // Books
+        if( metaA instanceof BookMeta ){
+            if( !(metaB instanceof BookMeta) ) return false;
+            
+            BookMeta bookA = (BookMeta) metaA;
+            BookMeta bookB = (BookMeta) metaB;
+            
+            // Author
+            if( bookA.getAuthor() != null ){
+                if( !bookA.getAuthor().equals( bookB.getAuthor() ) ) return false;
+            }
+            
+            // Pages
+            if( bookA.getPageCount() != bookB.getPageCount() ) return false;
+            
+            for( int page = 0; page < bookA.getPages().size(); page++ ){
+                String pageContentA = bookA.getPage( page );
+                if( pageContentA != null ){
+                    if( !pageContentA.equals( bookB.getPage(page) ) ) return false;
+                }
+            }
+        }
+        
+        // Skulls
+        if( metaA instanceof SkullMeta ){
+            if( !(metaB instanceof SkullMeta) ) return false;
+            
+            SkullMeta skullA = (SkullMeta) metaA;
+            SkullMeta skullB = (SkullMeta) metaB;
+            
+            if( skullA.getOwner() != null ){
+                if( !skullA.getOwner().equals( skullB.getOwner() ) ) return false;
+            } else {
+                if( skullB.getOwner() != null ) return false;
+            }
+        }
+        
         return true;
         
      }
