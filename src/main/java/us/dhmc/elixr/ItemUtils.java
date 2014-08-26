@@ -14,7 +14,9 @@ import org.bukkit.inventory.meta.FireworkEffectMeta;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
 
 public class ItemUtils {
     
@@ -149,6 +151,19 @@ public class ItemUtils {
                 if( !skullA.getOwner().equals( skullB.getOwner() ) ) return false;
             } else {
                 if( skullB.getOwner() != null ) return false;
+            }
+        }
+        
+        // Potions
+        if( metaA instanceof PotionMeta ){
+            if( !(metaB instanceof PotionMeta) ) return false;
+            
+            PotionMeta potA = (PotionMeta) metaA;
+            PotionMeta potB = (PotionMeta) metaB;
+            
+            for( int c = 0; c < potA.getCustomEffects().size(); c++ ){
+                PotionEffect e = potA.getCustomEffects().get(c);
+                if( !e.equals( potB.getCustomEffects().get(c) ) ) return true;
             }
         }
         
