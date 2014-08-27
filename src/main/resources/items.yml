@@ -407,6 +407,8 @@ items:
     '373:8198': [nightvision1]
     '373:8262': [nightvisionext]
     '373:8270': [invisibility]
+    '373:8205': [waterbreathing]
+    '373:8269': [waterbreathing2]
     '373:16390': [splashnightvision1]
     '373:16454': [splashnightvisionext]
     '386:0': [bookandquill]
@@ -523,3 +525,4 @@ items:
     '160:14': [redstainedglasspane]
     '160:15': [blackstainedglasspane]
     '174:0': [packedice]
+    '146:0': [trappedchest]
