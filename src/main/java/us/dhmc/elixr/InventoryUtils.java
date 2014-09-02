@@ -87,7 +87,7 @@ public class InventoryUtils {
         for( int slot = 0; slot < player.getInventory().getSize(); slot++ ){
             ItemStack item = player.getInventory().getItem( slot );
             if( item == null ) continue;
-            if( ItemUtils.equals( item, itemDefinition, true ) ){
+            if( item.isSimilar( itemDefinition ) ){
                 
                 // check how many items we need
                 int diff = desiredQuantity - quantityFound;
@@ -405,7 +405,7 @@ public class InventoryUtils {
             
             ItemStack item = list[index];
 
-            if( ItemUtils.equals( item, pivot ) ){
+            if( item.isSimilar(pivot) ){
                 smallIndex++;
                 swap(list, smallIndex, index);
             }
