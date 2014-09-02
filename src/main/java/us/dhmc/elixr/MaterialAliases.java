@@ -11,6 +11,16 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 public class MaterialAliases {
+    
+    protected static MaterialAliases instance;
+    
+    public static MaterialAliases getInstance(){
+        if( instance == null ){
+            instance = new MaterialAliases();
+        }
+        return instance;
+    }
+    
 	
 	/**
 	 * Contains loaded item ids => aliases

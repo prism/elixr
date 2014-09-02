@@ -287,7 +287,7 @@ public class ItemUtils {
 	 * Returns a proper full name for an item, which includes meta content as well.
 	 * @return string
 	 */
-	public static String getItemFullNiceName( ItemStack item, MaterialAliases aliases ){
+	public static String getItemFullNiceName( ItemStack item ){
 		
 		String item_name = "";
 		
@@ -309,9 +309,9 @@ public class ItemUtils {
 		
 		// Set the base item name
 		if(dataValueUsedForSubitems(item.getTypeId())){
-			item_name += aliases.getAlias(item.getTypeId(), item.getDurability());
+			item_name += MaterialAliases.getInstance().getAlias(item.getTypeId(), item.getDurability());
 		} else {
-			item_name += aliases.getAlias(item.getTypeId(), 0);
+			item_name += MaterialAliases.getInstance().getAlias(item.getTypeId(), 0);
 		}
 		if(item_name.isEmpty()){
 			item_name += item.getType().toString().toLowerCase().replace("_", " ");
