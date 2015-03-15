@@ -1,13 +1,13 @@
 package us.dhmc.elixr;
 
-import java.util.List;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class EntityUtils {
 	
@@ -89,9 +89,11 @@ public class EntityUtils {
 			case SKULL:
 			case SNOW:
 			case SUGAR_CANE_BLOCK:
+            case STANDING_BANNER:
 			case STONE_PLATE:
 			case TORCH:
 			case TRIPWIRE:
+            case WALL_BANNER:
 			case WATER_LILY:
 			case WHEAT:
 			case WOOD_PLATE:

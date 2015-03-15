@@ -11,30 +11,37 @@
 		<dependency>
             <groupId>mkremins</groupId>
             <artifactId>fanciful</artifactId>
-            <version>0.1.5</version>
+            <version>0.3.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.10-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>1.7.10-R0.1-SNAPSHOT</version>
+            <version>1.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 	</dependencies>
 	<repositories>
-		<repository>
-			<id>repobo-snap</id>
-			<url>http://repo.bukkit.org/content/groups/public</url>
-		</repository>
+        <!-- For spigot/bukkit/craftbukkit releases -->
+        <repository>
+            <id>spigot-releases</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/releases/</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+
+        <!-- For spigot/bukkit/craftbukkit snapshots -->
+        <repository>
+            <id>spigot-snapshots</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+
+        <!-- Fanciful Repo -->
 		<repository>
             <id>fanciful-mvn-repo</id>
-            <url>https://raw.github.com/mkremins/fanciful/mvn-repo/</url>
+            <url>http://repo.franga2000.com/artifactory/public</url>
         </repository>
 	</repositories>
 	<distributionManagement>
