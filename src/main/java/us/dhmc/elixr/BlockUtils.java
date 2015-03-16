@@ -11,14 +11,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.material.Bed;
 
 public class BlockUtils {
-	
-	
+
 	/**
-	 * Determines if the existing block at a location is
+	 * Determines if the material of an existing block at a location is
 	 * something that's commonly acceptable to replace.
 	 * 
-	 * @param block
-	 * @return
+	 * @param m the material of the block
+	 * @return if the material is acceptable to replace
 	 */
 	public static boolean isAcceptableForBlockPlace( Material m ){
 		switch(m){
@@ -26,29 +25,27 @@ public class BlockUtils {
 			case FIRE:
 			case GRAVEL:
 			case LAVA:
+            case LONG_GRASS:
 			case SAND:
+            case SNOW:
+            case SNOW_BLOCK:
+            case STATIONARY_LAVA:
 			case STATIONARY_WATER:
-			case STATIONARY_LAVA:
-			case WATER:
-			case SNOW:
-			case SNOW_BLOCK:
-			case LONG_GRASS:
+            case WATER:
 				return true;
 			default:
 				return false;
 		}
 	}
-	
-	
+
 	/**
 	 * Recursively grabs a list of all blocks directly above Block
 	 * that are anticipated to fall.
 	 * 
-	 * @param block
-	 * @return
+	 * @param block the block to fetch blocks above
+	 * @return the list of blocks directly above the block
 	 */
 	public static ArrayList<Block> findFallingBlocksAboveBlock( final Block block ){
-		
 		ArrayList<Block> falling_blocks = new ArrayList<Block>();
 		
 		// Get block above
@@ -65,28 +62,31 @@ public class BlockUtils {
 		return falling_blocks;
 	}
 	
-	
 	/**
 	 * Determine whether or not a block is capable of falling.
 	 * 
 	 * Seems like there's got to be another way to do this...
-	 * @param block
-	 * @return
+	 * @param block the block to check for the ability to fall
+	 * @return whether the block is capable of falling
 	 */
 	public static boolean isFallingBlock( Block block ){
 		Material m = block.getType();
-		if( m.equals(Material.SAND) || m.equals(Material.GRAVEL) || m.equals(Material.ANVIL) ){
-			return true;
-		}
-		return false;
+
+        switch (m){
+            case SAND:
+            case GRAVEL:
+            case ANVIL:
+                return true;
+            default:
+                return false;
+        }
 	}
-	
 	
 	/**
 	 * Searches for detachable blocks on the four acceptable sides of a block.
 	 * 
-	 * @param block
-	 * @return
+	 * @param block the block to check the sides of
+	 * @return the list of detachable block on the sides of the block
 	 */
 	public static ArrayList<Block> findSideFaceAttachedBlocks( final Block block ){
 		
@@ -114,65 +114,68 @@ public class BlockUtils {
 		
 	}
 	
-	
 	/**
-	 * 
-	 * @param source
-	 * @param surrounding
-	 * @return
+	 * Searches around a block for the first block of the given material
+     *
+	 * @param block the block to search around
+	 * @param m the material of the surrounding block to look for
+	 * @return the first surrounding block of the given material found
 	 */
-	public static Block findFirstSurroundingBlockOfType( Block source, Material surrounding ){
-		Block blockToCheck = source.getRelative(BlockFace.EAST);
-		if( blockToCheck.getType().equals(surrounding) ){
+	public static Block findFirstSurroundingBlockOfType( Block block, Material m){
+		Block blockToCheck = block.getRelative(BlockFace.EAST);
+		if( blockToCheck.getType().equals(m) ){
 			return blockToCheck;
 		}
-		blockToCheck = source.getRelative(BlockFace.WEST);
-		if( blockToCheck.getType().equals(surrounding) ){
+		blockToCheck = block.getRelative(BlockFace.WEST);
+		if( blockToCheck.getType().equals(m) ){
 			return blockToCheck;
 		}
-		blockToCheck = source.getRelative(BlockFace.NORTH);
-		if( blockToCheck.getType().equals(surrounding) ){
+		blockToCheck = block.getRelative(BlockFace.NORTH);
+		if( blockToCheck.getType().equals(m) ){
 			return blockToCheck;
 		}
-		blockToCheck = source.getRelative(BlockFace.SOUTH);
-		if( blockToCheck.getType().equals(surrounding) ){
+		blockToCheck = block.getRelative(BlockFace.SOUTH);
+		if( blockToCheck.getType().equals(m) ){
 			return blockToCheck;
 		}
 		return null;
 	}
 	
-	
 	/**
-	 * Determine whether or not a block is going to detach
+	 * Determine whether or not a block using the given material is going to detach
 	 * from the side of a block.
-	 * 
-	 * Seems like there's got to be another way to do this...
-	 * @param m
-	 * @return
+	 *
+	 * @param m the material to check for detaching
+	 * @return whether a block with a given material will detach from the side of a block
 	 */
 	public static boolean isSideFaceDetachableMaterial( Material m ){
-		if( m.equals(Material.WALL_SIGN) 
-			|| m.equals(Material.TORCH) 
-			|| m.equals(Material.LEVER) 
-			|| m.equals(Material.WOOD_BUTTON) 
-			|| m.equals(Material.STONE_BUTTON) 
-			|| m.equals(Material.LADDER)
-			|| m.equals(Material.VINE)
-			|| m.equals(Material.COCOA)
-			|| m.equals(Material.PORTAL)
-			|| m.equals(Material.PISTON_EXTENSION)
-			|| m.equals(Material.PISTON_MOVING_PIECE)
-			|| m.equals(Material.PISTON_BASE) // Fake entry, the base always breaks if the extension is lost
-			|| m.equals(Material.PISTON_STICKY_BASE)
-			|| m.equals(Material.REDSTONE_TORCH_OFF)
-			|| m.equals(Material.REDSTONE_TORCH_ON)
-			|| m.equals(Material.TRIPWIRE_HOOK)
-			|| m.equals(Material.TRAP_DOOR)){
-			return true;
-		}
-		return false;
+        switch (m){
+            case BANNER:
+            case COCOA:
+            case WALL_SIGN:
+            case LADDER:
+            case LEVER:
+            case IRON_TRAPDOOR:
+            case PORTAL:
+            case PISTON_BASE: // Fake entry, the base always breaks if the extension is lost
+            case PISTON_EXTENSION:
+            case PISTON_MOVING_PIECE:
+            case PISTON_STICKY_BASE:
+            case REDSTONE_TORCH_OFF:
+            case REDSTONE_TORCH_ON:
+            case STANDING_BANNER:
+            case STONE_BUTTON:
+            case TRAP_DOOR:
+            case TORCH:
+            case TRIPWIRE_HOOK:
+            case WALL_BANNER:
+            case WOOD_BUTTON:
+            case VINE:
+                return true;
+            default:
+                return false;
+        }
 	}
-	
 	
 	/**
 	 * Searches for detachable blocks on the four acceptable sides of a block.
@@ -181,7 +184,6 @@ public class BlockUtils {
 	 * @return
 	 */
 	public static ArrayList<Block> findTopFaceAttachedBlocks( final Block block ){
-		
 		ArrayList<Block> detaching_blocks = new ArrayList<Block>();
 		
 		// Find any block on top of this that will detach
@@ -206,27 +208,26 @@ public class BlockUtils {
 	
 	/**
 	 * Determine whether or not a block is going to detach
-	 * from the side of a block.
-	 * 
-	 * Seems like there's got to be another way to do this...
-	 * @param m
-	 * @return
+	 * from the top of a block.
+     *
+	 * @param m the material to check for detaching
+	 * @return whether a block with a given material will detach from the top of a block
 	 */
 	public static boolean isTopFaceDetachableMaterial( Material m ){
 		switch(m){
-			case ACTIVATOR_RAIL:
+            case ACTIVATOR_RAIL:
+            case BANNER:
 			case BROWN_MUSHROOM:
 			case CACTUS:
 			case CARROT:
+            case CROPS:
 			case DEAD_BUSH:
 			case DETECTOR_RAIL:
+            case DIODE:
+            case DIODE_BLOCK_OFF:
+            case DIODE_BLOCK_ON:
 			case DOUBLE_PLANT:
-			case POTATO:
-			case CROPS:
-			case DIODE:
-			case DIODE_BLOCK_OFF:
-			case DIODE_BLOCK_ON:
-			case FLOWER_POT:
+            case FLOWER_POT:
 			case GOLD_PLATE:
 			case IRON_DOOR:
 			case IRON_DOOR_BLOCK:
@@ -236,6 +237,7 @@ public class BlockUtils {
 			case MELON_STEM:
 			case NETHER_WARTS:
 			case PORTAL:
+            case POTATO:
 			case POWERED_RAIL:
 			case PUMPKIN_STEM:
 			case RAILS:
@@ -252,10 +254,12 @@ public class BlockUtils {
 			case SIGN_POST:
 			case SKULL:
 			case SNOW:
-			case SUGAR_CANE_BLOCK:
+            case STANDING_BANNER:
 			case STONE_PLATE:
+            case SUGAR_CANE_BLOCK:
 			case TORCH:
 			case TRIPWIRE:
+            case WALL_BANNER:
 			case WATER_LILY:
 			case WHEAT:
 			case WOOD_DOOR:
@@ -324,45 +328,54 @@ public class BlockUtils {
 	
 	/**
 	 * Is an entity a hanging type, attachable to a block.
-	 * @param block_filters
-	 * @return
+	 * @param entity the entity to check for being a hanging type
+	 * @return if an entity is a hanging type attachable to a block
 	 */
 	public static boolean isHangingEntity( Entity entity ){
-		EntityType e = entity.getType();
-		if( e.equals(EntityType.ITEM_FRAME) || e.equals(EntityType.PAINTING) ){
-			return true;
-		}
-		return false;
+		EntityType type = entity.getType();
+
+        switch (type) {
+            case ITEM_FRAME:
+            case PAINTING:
+                return true;
+            default:
+                return false;
+        }
 	}
 	
 	
 	/**
-	 * 
-	 * @param block
+	 * Gets the other block that is part of a double length block
+     *
+	 * @param block the block to get the sibling of
 	 */
-	public static Block getSiblingForDoubleLengthBlock( Block block ){
+	public static Block getSiblingForDoubleLengthBlock(Block block){
 		/**
 		 * Handle special double-length blocks
 		 */
-		if( block.getType().equals(Material.WOODEN_DOOR) || block.getType().equals(Material.IRON_DOOR_BLOCK) ){
-			// If you've broken the top half of a door, we need to record the action for the bottom.
-			// This is because a top half break doesn't record the orientation of the door while the bottom does,
-			// and we have code in the rollback/restore to add the top half back in.
-			if(block.getData() == 8 || block.getData() == 9){
-				return block.getRelative(BlockFace.DOWN);
-			}
-		}
-		// If it's a bed, we always record the lower half and rely on appliers
-		if( block.getType().equals(Material.BED_BLOCK) ){
-			Bed b = (Bed)block.getState().getData();
-			if(b.isHeadOfBed()){
-	            return block.getRelative(b.getFacing().getOppositeFace());
-	        }
-		}
-		if( block.getType().equals(Material.CHEST) || block.getType().equals(Material.TRAPPED_CHEST) ){
-			return findFirstSurroundingBlockOfType( block, block.getType() );
-		}
-		return null;
+        switch (block.getType()) {
+            case ACACIA_DOOR:
+            case BIRCH_DOOR:
+            case DARK_OAK_DOOR:
+            case JUNGLE_DOOR:
+            case IRON_DOOR_BLOCK:
+            case SPRUCE_DOOR:
+            case WOODEN_DOOR:
+                if(block.getData() == 8 || block.getData() == 9) {
+                    return block.getRelative(BlockFace.DOWN);
+                }
+            case BED_BLOCK:
+                Bed b = (Bed)block.getState().getData();
+                if(b.isHeadOfBed()){
+                    return block.getRelative(b.getFacing().getOppositeFace());
+                }
+            case CHEST:
+                return findFirstSurroundingBlockOfType(block, block.getType());
+            case TRAPPED_CHEST:
+                return findFirstSurroundingBlockOfType(block, block.getType());
+        }
+
+        return null;
 	}
 	
 	
@@ -514,16 +527,22 @@ public class BlockUtils {
 	
 	
 	/**
-	 * 
-	 * @param m
-	 * @return
+	 * Checks if material given is the material of a door
+     *
+	 * @param m the material to check for being a door material
+	 * @return whether the material is a door material
 	 */
 	public static boolean isDoor(Material m){
 		switch(m){
+            case ACACIA_DOOR:
+            case BIRCH_DOOR:
+            case DARK_OAK_DOOR:
+            case JUNGLE_DOOR:
+            case IRON_DOOR:
+            case IRON_DOOR_BLOCK:
+            case SPRUCE_DOOR:
 			case WOOD_DOOR:
 			case WOODEN_DOOR:
-			case IRON_DOOR:
-			case IRON_DOOR_BLOCK:
 				return true;
 			default:
 				return false;
