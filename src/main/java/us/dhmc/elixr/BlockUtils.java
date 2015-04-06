@@ -363,11 +363,15 @@ public class BlockUtils {
             case WOODEN_DOOR:
                 if(block.getData() == 8 || block.getData() == 9) {
                     return block.getRelative(BlockFace.DOWN);
+                } else {
+                    return null;
                 }
             case BED_BLOCK:
                 Bed b = (Bed)block.getState().getData();
                 if(b.isHeadOfBed()){
                     return block.getRelative(b.getFacing().getOppositeFace());
+                } else {
+                    return null;
                 }
             case CHEST:
                 return findFirstSurroundingBlockOfType(block, block.getType());
