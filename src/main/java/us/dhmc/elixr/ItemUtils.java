@@ -441,7 +441,11 @@ public class ItemUtils {
                 || id == 6		// saplings
                 || id == 373    // potions
         		|| id == 383    // creature eggs
-    			|| id == 397;   // skulls
+    			|| id == 397    // skulls
+                || id == 1      // stone
+                || id == 3      // dirt
+                || id == 19     // sponge
+                || id == 168;   // prismarine
     }
     
     
