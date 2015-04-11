@@ -365,6 +365,11 @@ public class BlockUtils {
                     return block.getRelative(BlockFace.DOWN);
                 }
                 break;
+            case DOUBLE_PLANT:
+                if(block.getData() == 10) {
+                    return block.getRelative(BlockFace.DOWN);
+                }
+                break;
             case BED_BLOCK:
                 Bed b = (Bed)block.getState().getData();
                 if(b.isHeadOfBed()){
